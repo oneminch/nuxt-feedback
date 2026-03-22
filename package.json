@@ -60,7 +60,7 @@
     "clsx": "^2.1.1",
     "defu": "^6.1.4",
     "isomorphic-dompurify": "^2.36.0",
-    "lucide-vue-next": "^0.562.0",
+    "lucide-vue-next": "^0.577.0",
     "reka-ui": "^2.8.2",
     "resend": "^6.9.3",
     "tailwind-merge": "^3.5.0",
@@ -70,7 +70,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.7.0",
-    "@nuxt/eslint": "1.12.1",
+    "@nuxt/eslint": "1.15.2",
     "@nuxt/eslint-config": "^1.15.2",
     "@nuxt/module-builder": "^1.0.2",
     "@nuxt/schema": "^4.3.1",

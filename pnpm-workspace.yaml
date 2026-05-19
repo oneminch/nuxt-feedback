@@ -1,10 +1,8 @@
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - '@tailwindcss/oxide'
-  - esbuild
-  - unrs-resolver
-  - vue-demi
-
-overrides:
-  brace-expansion@<5.0.5: '>=5.0.5'
-  serialize-javascript@<=7.0.2: '>=7.0.3'
+shamefullyHoist: true
+strictPeerDependencies: false
+allowBuilds:
+  '@parcel/watcher': true
+  '@tailwindcss/oxide': true
+  esbuild: true
+  unrs-resolver: true
+  vue-demi: true

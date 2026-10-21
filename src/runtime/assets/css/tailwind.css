@@ -8,7 +8,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
+:host {
   --ui-primary: var(--ui-color-neutral-100);
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);

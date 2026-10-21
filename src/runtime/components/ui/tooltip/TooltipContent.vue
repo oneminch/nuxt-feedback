@@ -9,6 +9,7 @@ import {
   useForwardPropsEmits,
 } from "reka-ui";
 import { cn } from "#nuxt-feedback/utils";
+import { usePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
 
 defineOptions({
   inheritAttrs: false,
@@ -26,10 +27,11 @@ const emits = defineEmits<TooltipContentEmits>();
 
 const delegatedProps = reactiveOmit(props, "class");
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const portalTarget = usePortalTarget();
 </script>
 
 <template>
-  <TooltipPortal>
+  <TooltipPortal :to="portalTarget">
     <TooltipContent
       data-slot="tooltip-content"
       v-bind="{ ...forwarded, ...$attrs }"

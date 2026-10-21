@@ -10,6 +10,7 @@ import {
   useForwardPropsEmits,
 } from "reka-ui";
 import { cn } from "#nuxt-feedback/utils";
+import { usePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
 import { SelectScrollDownButton, SelectScrollUpButton } from ".";
 
 defineOptions({
@@ -27,10 +28,11 @@ const emits = defineEmits<SelectContentEmits>();
 const delegatedProps = reactiveOmit(props, "class");
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const portalTarget = usePortalTarget();
 </script>
 
 <template>
-  <SelectPortal>
+  <SelectPortal :to="portalTarget">
     <SelectContent
       data-slot="select-content"
       v-bind="{ ...forwarded, ...$attrs }"

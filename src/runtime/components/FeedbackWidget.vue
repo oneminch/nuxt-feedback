@@ -1,129 +1,76 @@
 <script setup lang="ts">
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "#nuxt-feedback/components/ui/dialog";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "#nuxt-feedback/components/ui/drawer";
-import { Button } from "#nuxt-feedback/components/ui/button";
-import { cn } from "#nuxt-feedback/utils";
-import { computed, onMounted, onUnmounted, ref, watch } from "#imports";
-import type { FeedbackUIProps, SubmissionStatus } from "../types";
-import FeedbackForm from "#nuxt-feedback/components/FeedbackForm.vue";
-import FeedbackStatus from "#nuxt-feedback/components/FeedbackStatus.vue";
-import useFeedbackWidget from "#nuxt-feedback/composables/useFeedbackWidget";
-import { useMediaQuery } from "@vueuse/core";
+import { onBeforeUnmount, onMounted, ref } from "#imports";
+import { providePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
+import FeedbackWidgetContent from "#nuxt-feedback/components/FeedbackWidgetContent.vue";
 
-withDefaults(defineProps<FeedbackUIProps>(), {
-  title: "Feedback",
-  description: "Tell us what you think.",
-  triggerLabel: "Share Feedback",
-  triggerClass: "",
-  submitLabel: "Submit",
-  withTopics: true,
-  topics: () => ["General Feedback", "Bug Report", "Feature Request"],
-});
+defineOptions({ inheritAttrs: false });
 
-const { isOpen, registerWidget, unregisterWidget } = useFeedbackWidget();
-const isDesktop = useMediaQuery("(min-width: 640px)");
+const PROPERTIES_STYLE_ID = "nuxt-feedback-properties";
 
-const isFeedbackSubmitted = ref(false);
-const submissionStatus = ref({
-  status: "" as SubmissionStatus,
-  message: "",
-});
+const host = ref<HTMLElement>();
+const container = ref<HTMLElement>();
+providePortalTarget(container);
 
-const handleAfterSubmit = (status: "success" | "failure", message: string) => {
-  isFeedbackSubmitted.value = true;
-  submissionStatus.value = { status, message };
+let observer: MutationObserver | undefined;
+
+// `@property` rules are ignored inside shadow roots, so they are registered on
+// the document. They only define `--tw-*` internals and don't affect the page.
+const registerProperties = (widgetCss: string) => {
+  if (document.getElementById(PROPERTIES_STYLE_ID)) return;
+  const rules = widgetCss.match(/@property\s+--[\w-]+\s*\{[^}]*\}/g);
+  if (!rules) return;
+  const style = document.createElement("style");
+  style.id = PROPERTIES_STYLE_ID;
+  style.textContent = rules.join("\n");
+  document.head.appendChild(style);
 };
 
-const Modal = computed(() => ({
-  Root: isDesktop.value ? Dialog : Drawer,
-  Trigger: isDesktop.value ? DialogTrigger : DrawerTrigger,
-  Content: isDesktop.value ? DialogContent : DrawerContent,
-  Header: isDesktop.value ? DialogHeader : DrawerHeader,
-  Title: isDesktop.value ? DialogTitle : DrawerTitle,
-  Description: isDesktop.value ? DialogDescription : DrawerDescription,
-}));
+onMounted(async () => {
+  // Client-only import so the CSS never ends up in the SSR-rendered document.
+  const { default: widgetCss } = await import(
+    "../assets/css/tailwind.css?inline"
+  );
 
-watch(isOpen, (newValue: boolean) => {
-  if (!newValue) {
-    isFeedbackSubmitted.value = false;
-    submissionStatus.value = { status: "" as SubmissionStatus, message: "" };
-  }
+  const root = host.value!.attachShadow({ mode: "open" });
+
+  const style = document.createElement("style");
+  style.textContent = widgetCss;
+
+  const element = document.createElement("div");
+  element.className = "preflight";
+
+  const syncDarkMode = () => {
+    const isDark =
+      document.documentElement.classList.contains("dark") ||
+      document.body.classList.contains("dark");
+    element.classList.toggle("dark", isDark);
+  };
+  syncDarkMode();
+
+  observer = new MutationObserver(syncDarkMode);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+
+  registerProperties(widgetCss);
+  root.append(style, element);
+  container.value = element;
 });
 
-onMounted(() => {
-  registerWidget();
-});
-
-onUnmounted(() => {
-  unregisterWidget();
+onBeforeUnmount(() => {
+  observer?.disconnect();
 });
 </script>
 
 <template>
-  <component :is="Modal.Root" v-model:open="isOpen">
-    <component :is="Modal.Trigger" as-child>
-      <div class="preflight">
-        <Button
-          :class="
-            cn(
-              'nfw:bg-white nfw:hover:bg-neutral-50 nfw:text-neutral-800 nfw:border nfw:border-neutral-200 nfw:shadow-none',
-              triggerClass
-            )
-          "
-        >
-          {{ triggerLabel }}
-        </Button>
-      </div>
-    </component>
-    <component
-      :is="Modal.Content"
-      class="nfw:sm:max-w-sm nfw:px-2 nfw:*:px-4 nfw:text-zinc-900 nfw:dark:text-zinc-50"
-    >
-      <template v-if="!isFeedbackSubmitted">
-        <component :is="Modal.Header">
-          <component :is="Modal.Title">{{ title }}</component>
-          <component :is="Modal.Description">
-            {{ description }}
-          </component>
-        </component>
-
-        <FeedbackForm
-          :submit-label="submitLabel"
-          :with-topics="withTopics"
-          :topics="topics"
-          @after-submit="handleAfterSubmit"
-        />
-      </template>
-
-      <template v-else>
-        <FeedbackStatus
-          v-if="isFeedbackSubmitted"
-          :status="submissionStatus.status"
-          :message="submissionStatus.message"
-        />
-      </template>
-
-      <DrawerFooter v-if="!isDesktop" class="nfw:pt-2">
-        <DrawerClose as-child>
-          <Button variant="outline"> Close </Button>
-        </DrawerClose>
-      </DrawerFooter>
-    </component>
-  </component>
+  <div ref="host" style="display: contents">
+    <Teleport v-if="container" :to="container">
+      <FeedbackWidgetContent v-bind="$attrs" />
+    </Teleport>
+  </div>
 </template>

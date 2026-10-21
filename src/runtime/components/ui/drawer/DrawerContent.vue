@@ -4,6 +4,7 @@ import type { HTMLAttributes } from "vue";
 import { useForwardPropsEmits } from "reka-ui";
 import { DrawerContent, DrawerPortal } from "vaul-vue";
 import { cn } from "#nuxt-feedback/utils";
+import { usePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
 import DrawerOverlay from "./DrawerOverlay.vue";
 
 const props = defineProps<
@@ -12,10 +13,11 @@ const props = defineProps<
 const emits = defineEmits<DialogContentEmits>();
 
 const forwarded = useForwardPropsEmits(props, emits);
+const portalTarget = usePortalTarget();
 </script>
 
 <template>
-  <DrawerPortal>
+  <DrawerPortal :to="portalTarget">
     <DrawerOverlay />
     <DrawerContent
       data-slot="drawer-content"

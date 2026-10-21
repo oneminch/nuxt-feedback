@@ -54,10 +54,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     await import("@tailwindcss/vite").then((r) => addVitePlugin(r.default));
 
-    nuxt.options.css.push(
-      resolver.resolve("./runtime/assets/css/tailwind.css")
-    );
-
     addImports({
       name: "default",
       as: "useFeedbackWidget",

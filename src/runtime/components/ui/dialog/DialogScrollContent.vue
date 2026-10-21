@@ -12,6 +12,7 @@ import {
   useForwardPropsEmits,
 } from "reka-ui";
 import { cn } from "#nuxt-feedback/utils";
+import { usePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
 
 const props = defineProps<
   DialogContentProps & { class?: HTMLAttributes["class"] }
@@ -21,10 +22,11 @@ const emits = defineEmits<DialogContentEmits>();
 const delegatedProps = reactiveOmit(props, "class");
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const portalTarget = usePortalTarget();
 </script>
 
 <template>
-  <DialogPortal>
+  <DialogPortal :to="portalTarget">
     <DialogOverlay
       class="nfw:fixed nfw:inset-0 nfw:z-50 nfw:grid nfw:place-items-center nfw:overflow-y-auto nfw:bg-black/80 nfw:data-[state=open]:animate-in nfw:data-[state=closed]:animate-out nfw:data-[state=closed]:fade-out-0 nfw:data-[state=open]:fade-in-0"
     >

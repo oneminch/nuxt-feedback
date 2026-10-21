@@ -11,6 +11,7 @@ import {
   useForwardPropsEmits,
 } from "reka-ui";
 import { cn } from "#nuxt-feedback/utils";
+import { usePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
 import DialogOverlay from "#nuxt-feedback/components/ui/dialog/DialogOverlay.vue";
 
 const props = defineProps<
@@ -21,10 +22,11 @@ const emits = defineEmits<DialogContentEmits>();
 const delegatedProps = reactiveOmit(props, "class");
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const portalTarget = usePortalTarget();
 </script>
 
 <template>
-  <DialogPortal>
+  <DialogPortal :to="portalTarget">
     <DialogOverlay />
     <DialogContent
       data-slot="dialog-content"

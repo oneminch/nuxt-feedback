@@ -62,7 +62,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponent({
       name: "FeedbackWidget",
-      filePath: resolver.resolve("./runtime/components/FeedbackWidget.vue"),
+      filePath: resolver.resolve("./runtime/components/FeedbackWidgetShadow.vue"),
     });
 
     if (options.method === "email") {

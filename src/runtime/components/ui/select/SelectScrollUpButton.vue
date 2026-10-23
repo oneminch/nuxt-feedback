@@ -24,13 +24,13 @@ const forwardedProps = useForwardProps(delegatedProps);
     v-bind="forwardedProps"
     :class="
       cn(
-        'nfw:flex nfw:cursor-default nfw:items-center nfw:justify-center nfw:py-1',
+        'flex cursor-default items-center justify-center py-1',
         props.class
       )
     "
   >
     <slot>
-      <ChevronUp class="nfw:size-4" />
+      <ChevronUp class="size-4" />
     </slot>
   </SelectScrollUpButton>
 </template>

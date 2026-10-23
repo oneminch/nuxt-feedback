@@ -11,17 +11,17 @@ defineProps<{
 
 <template>
   <div
-    class="nfw:flex nfw:flex-col nfw:items-center nfw:justify-center nfw:gap-6 nfw:p-6"
+    class="flex flex-col items-center justify-center gap-6 p-6"
     role="status"
     aria-live="polite"
   >
     <SuccessIcon
       v-if="status === 'success'"
-      class="nfw:size-16 nfw:text-green-500"
+      class="size-16 text-green-500"
     />
-    <FailureIcon v-else class="nfw:size-16 nfw:text-rose-500" />
+    <FailureIcon v-else class="size-16 text-rose-500" />
     <h3
-      class="nfw:text-xl nfw:text-center nfw:text-zinc-900 nfw:dark:text-zinc-50 nfw:font-medium"
+      class="text-xl text-center text-zinc-900 dark:text-zinc-50 font-medium"
     >
       {{ message }}
     </h3>

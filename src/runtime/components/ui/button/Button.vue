@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
     :as="as"
     :as-child="asChild"
     :class="
-      cn('nfw:cursor-pointer', buttonVariants({ variant, size }), props.class)
+      cn('cursor-pointer', buttonVariants({ variant, size }), props.class)
     "
   >
     <slot />

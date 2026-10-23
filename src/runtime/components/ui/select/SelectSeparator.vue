@@ -17,7 +17,7 @@ const delegatedProps = reactiveOmit(props, "class");
     v-bind="delegatedProps"
     :class="
       cn(
-        'nfw:bg-border nfw:pointer-events-none nfw:-mx-1 nfw:my-1 nfw:h-px',
+        'bg-border pointer-events-none -mx-1 my-1 h-px',
         props.class
       )
     "

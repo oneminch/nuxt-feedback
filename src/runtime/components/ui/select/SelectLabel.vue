@@ -11,7 +11,7 @@ const props = defineProps<
 <template>
   <SelectLabel
     data-slot="select-label"
-    :class="cn('nfw:px-2 nfw:py-1.5 nfw:text-sm nfw:font-medium', props.class)"
+    :class="cn('px-2 py-1.5 text-sm font-medium', props.class)"
   >
     <slot />
   </SelectLabel>

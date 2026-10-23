@@ -4,6 +4,8 @@ import type { FeedbackData, FeedbackFormState } from "./types";
 import type { RouteLocationNormalizedLoadedGeneric } from "#vue-router";
 import DOMPurify from "isomorphic-dompurify";
 
+export const FEEDBACK_WIDGET_TAG = "nuxt-feedback-widget";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

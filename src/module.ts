@@ -6,6 +6,7 @@ import {
   addServerHandler,
   useLogger,
   addImports,
+  addPlugin,
 } from "@nuxt/kit";
 import { defu } from "defu";
 import { name, version } from "../package.json";
@@ -34,10 +35,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.alias["#nuxt-feedback"] = resolver.resolve("./runtime");
 
-    // nuxt.options.alias["#nuxt-feedback/tailwind"] = resolver.resolve(
-    //   "./runtime/assets/css/tailwind.css",
-    // );
-
     // Check nitro.options.static in the nitro:init hook
 
     // const isSSG = !!nuxt.options.nitro?.prerender || nuxt.options.nitro.static;
@@ -62,8 +59,10 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponent({
       name: "FeedbackWidget",
-      filePath: resolver.resolve("./runtime/components/FeedbackWidgetShadow.vue"),
+      filePath: resolver.resolve("./runtime/components/FeedbackWidgetElement.vue"),
     });
+
+    addPlugin(resolver.resolve("./runtime/plugins/feedback-widget.client"));
 
     if (options.method === "email") {
       addServerHandler({

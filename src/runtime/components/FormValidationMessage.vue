@@ -11,9 +11,9 @@ defineProps<{
     aria-live="polite"
     :class="
       cn(
-        'nfw:text-xs nfw:mt-1.5 nfw:mb-2.5 nfw:h-3 nfw:leading-3 nfw:transition-all nfw:duration-150 nfw:translate-y-0.25 nfw:opacity-0 nfw:invisible nfw:text-rose-500',
+        'text-xs mt-1.5 mb-2.5 h-3 leading-3 transition-all duration-150 translate-y-0.25 opacity-0 invisible text-rose-500',
         {
-          'nfw:translate-y-0 nfw:opacity-100 nfw:visible': errorMessage,
+          'translate-y-0 opacity-100 visible': errorMessage,
         }
       )
     "

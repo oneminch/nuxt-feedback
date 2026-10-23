@@ -12,7 +12,7 @@ const props = defineProps<{
     data-slot="dialog-header"
     :class="
       cn(
-        'nfw:flex nfw:flex-col nfw:gap-2 nfw:text-center nfw:sm:text-left',
+        'flex flex-col gap-2 text-center sm:text-left',
         props.class
       )
     "

@@ -38,10 +38,9 @@ const portalTarget = usePortalTarget();
       v-bind="{ ...forwarded, ...$attrs }"
       :class="
         cn(
-          'preflight',
-          'nfw:bg-popover nfw:text-popover-foreground nfw:data-[state=open]:animate-in nfw:data-[state=closed]:animate-out nfw:data-[state=closed]:fade-out-0 nfw:data-[state=open]:fade-in-0 nfw:data-[state=closed]:zoom-out-95 nfw:data-[state=open]:zoom-in-95 nfw:data-[side=bottom]:slide-in-from-top-2 nfw:data-[side=left]:slide-in-from-right-2 nfw:data-[side=right]:slide-in-from-left-2 nfw:data-[side=top]:slide-in-from-bottom-2 nfw:relative nfw:z-50 nfw:max-h-(--reka-select-content-available-height) nfw:min-w-[8rem] nfw:overflow-x-hidden nfw:overflow-y-auto nfw:rounded-md nfw:border nfw:shadow-md',
+          'bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--reka-select-content-available-height) min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-md border shadow-md',
           position === 'popper' &&
-            'nfw:data-[side=bottom]:translate-y-1 nfw:data-[side=left]:-translate-x-1 nfw:data-[side=right]:translate-x-1 nfw:data-[side=top]:-translate-y-1',
+            'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
           props.class
         )
       "
@@ -50,9 +49,9 @@ const portalTarget = usePortalTarget();
       <SelectViewport
         :class="
           cn(
-            'nfw:p-1',
+            'p-1',
             position === 'popper' &&
-              'nfw:h-[var(--reka-select-trigger-height)] nfw:w-full nfw:min-w-[var(--reka-select-trigger-width)] nfw:scroll-my-1'
+              'h-[var(--reka-select-trigger-height)] w-full min-w-[var(--reka-select-trigger-width)] scroll-my-1'
           )
         "
       >

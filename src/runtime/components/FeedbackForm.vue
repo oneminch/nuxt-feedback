@@ -105,7 +105,7 @@ const submitFeedback = async () => {
 <template>
   <form @submit.prevent="submitFeedback" @change="resetErrors">
     <Select v-if="withTopics" v-model="formState.topic">
-      <SelectTrigger class="nfw:w-full">
+      <SelectTrigger class="w-full">
         <SelectValue placeholder="Select a topic" />
       </SelectTrigger>
       <SelectContent>
@@ -122,13 +122,13 @@ const submitFeedback = async () => {
     <TooltipProvider>
       <RadioGroup
         v-model="formState.reaction"
-        class="nfw:flex nfw:items-center nfw:justify-evenly nfw:gap-4 nfw:border nfw:border-border nfw:bg-muted/50 nfw:dark:bg-transparent nfw:p-4 nfw:rounded-md"
+        class="flex items-center justify-evenly gap-4 border border-border bg-muted/50 dark:bg-transparent p-4 rounded-md"
         name="Feedback Reaction"
       >
         <Tooltip v-for="[id, value] in defaultReactions" :key="id">
           <TooltipTrigger as-child>
             <RadioGroupItem
-              class="nfw:aria-checked:border-radio-checked-border nfw:aria-checked:bg-radio-checked-background nfw:dark:aria-checked:bg-radio-checked-background"
+              class="aria-checked:border-radio-checked-border aria-checked:bg-radio-checked-background dark:aria-checked:bg-radio-checked-background"
               :value="value"
               :aria-label="value"
             >
@@ -146,21 +146,21 @@ const submitFeedback = async () => {
 
     <FormValidationMessage :error-message="errors.reaction" />
 
-    <div class="nfw:mb-5">
-      <Label class="nfw:mb-1.5 nfw:text-base nfw:font-semibold" for="message"
+    <div class="mb-5">
+      <Label class="mb-1.5 text-base font-semibold" for="message"
         >Message (Optional)</Label
       >
       <Textarea
         id="message"
         v-model="formState.message"
-        class="nfw:h-24 nfw:resize-y nfw:max-h-48"
+        class="h-24 resize-y max-h-48"
         name="message"
         placeholder="Optional Message..."
       />
     </div>
 
     <Button
-      class="nfw:w-full"
+      class="w-full"
       :disabled="isSubmitting"
       :aria-disabled="isSubmitting"
     >

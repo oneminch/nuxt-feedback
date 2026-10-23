@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { reactiveOmit } from "@vueuse/core";
-import { X } from "lucide-vue-next";
+import { X } from "@lucide/vue";
 import {
   DialogClose,
   DialogContent,
@@ -11,7 +11,7 @@ import {
   DialogPortal,
   useForwardPropsEmits,
 } from "reka-ui";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 import { usePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
 
 const props = defineProps<
@@ -34,7 +34,7 @@ const portalTarget = usePortalTarget();
         :class="
           cn(
             'relative z-50 grid w-full max-w-lg my-8 gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-lg md:w-full',
-            props.class
+            props.class,
           )
         "
         v-bind="forwarded"

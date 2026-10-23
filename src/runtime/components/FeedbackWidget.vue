@@ -18,7 +18,7 @@ import {
   DrawerTrigger,
 } from "#nuxt-feedback/components/ui/drawer";
 import { Button } from "#nuxt-feedback/components/ui/button";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 import { computed, onMounted, onUnmounted, ref, watch } from "#imports";
 import type { FeedbackUIProps, SubmissionStatus } from "../types";
 import FeedbackForm from "#nuxt-feedback/components/FeedbackForm.vue";
@@ -86,7 +86,7 @@ onUnmounted(() => {
         :class="
           cn(
             'bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-200 shadow-none',
-            triggerClass
+            triggerClass,
           )
         "
       >

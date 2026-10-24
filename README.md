@@ -487,6 +487,13 @@ A list of issues I have noticed and I'm working on a fix for:
 - The widget doesn't currently work on fully static sites such as ones deployed to GitHub Pages as it requires a server for submitting feedback.
 - The `useFeedbackWidget` composable doesn't detect the `<FeedbackWidget />` component properly.
 
+Limitations that come from rendering the widget in a shadow root (Reka UI's document-level listeners don't see through shadow boundaries):
+
+- **Select menu:** pressing the topic select, dragging more than 10px into the menu's padding or scroll buttons and releasing there closes the menu. Normal clicks and selection are unaffected.
+- **Focus restoration:** when the form is replaced by the status view after submitting, focus isn't restored inside the open dialog/drawer. Tab navigation and focus trapping still work.
+- **Overlay position:** see "Styling conflicts" below for ancestors with `transform`, `filter` or `overflow: hidden`.
+- **Early `openWidget()`:** calling it before the widget element has registered (e.g. in a parent's `onMounted`) can be missed.
+
 ## Troubleshooting
 
 Feel free to open an issue if you are not able to resolve an issue.

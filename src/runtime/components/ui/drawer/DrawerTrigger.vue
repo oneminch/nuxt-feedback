@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { DialogTriggerProps } from "reka-ui";
-import { DialogTrigger } from "reka-ui";
+import type { DrawerTriggerProps } from "reka-ui";
+import { DrawerTrigger } from "reka-ui";
 
-const props = defineProps<DialogTriggerProps>();
+const props = defineProps<DrawerTriggerProps>();
 </script>
 
 <template>
-  <DialogTrigger data-slot="drawer-trigger" v-bind="props">
+  <DrawerTrigger data-slot="drawer-trigger" v-bind="props">
     <slot />
-  </DialogTrigger>
+  </DrawerTrigger>
 </template>

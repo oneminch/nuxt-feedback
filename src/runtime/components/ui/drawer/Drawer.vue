@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import type { DialogRootEmits, DialogRootProps } from "reka-ui";
-import { DialogRoot, useForwardPropsEmits } from "reka-ui";
+import type { DrawerRootEmits, DrawerRootProps } from "reka-ui";
+import { DrawerRoot, useForwardPropsEmits } from "reka-ui";
 
-const props = defineProps<DialogRootProps>();
-const emits = defineEmits<DialogRootEmits>();
+const props = defineProps<DrawerRootProps>();
+
+const emits = defineEmits<DrawerRootEmits>();
 
 const forwarded = useForwardPropsEmits(props, emits);
 </script>
 
 <template>
-  <DialogRoot data-slot="drawer" v-bind="forwarded">
-    <slot />
-  </DialogRoot>
+  <DrawerRoot v-slot="slotProps" v-bind="forwarded">
+    <slot v-bind="slotProps" />
+  </DrawerRoot>
 </template>

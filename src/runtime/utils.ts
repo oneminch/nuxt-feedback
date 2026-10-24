@@ -5,10 +5,10 @@ import DOMPurify from "isomorphic-dompurify";
 export const FEEDBACK_WIDGET_TAG = "nuxt-feedback-widget";
 
 export const defaultReactions = [
-  ["love-it", "Love it!"],
-  ["its-okay", "It's okay."],
-  ["not-great", "Not great."],
   ["hate-it", "Hate it!"],
+  ["not-great", "Not great."],
+  ["its-okay", "It's okay."],
+  ["love-it", "Love it!"],
 ] as const;
 
 export type Reactions = typeof defaultReactions;

@@ -23,8 +23,8 @@ import { computed, onMounted, onUnmounted, ref, watch } from "#imports";
 import type { FeedbackUIProps, SubmissionStatus } from "../types";
 import FeedbackForm from "#nuxt-feedback/components/FeedbackForm.vue";
 import FeedbackStatus from "#nuxt-feedback/components/FeedbackStatus.vue";
-import useFeedbackWidget from "#nuxt-feedback/composables/useFeedbackWidget";
-import { providePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
+import useFeedbackWidget from "#nuxt-feedback/composables/use-feedback-widget";
+import { providePortalTarget } from "#nuxt-feedback/composables/use-portal-target";
 import { useMediaQuery } from "@vueuse/core";
 
 withDefaults(defineProps<FeedbackUIProps>(), {

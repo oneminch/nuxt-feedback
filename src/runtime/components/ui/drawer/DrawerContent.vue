@@ -9,7 +9,7 @@ import {
   DrawerPortal,
   useForwardPropsEmits,
 } from "reka-ui";
-import { usePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
+import { usePortalTarget } from "#nuxt-feedback/composables/use-portal-target";
 import DrawerOverlay from "./DrawerOverlay.vue";
 
 defineOptions({

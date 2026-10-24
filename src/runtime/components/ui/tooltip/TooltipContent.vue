@@ -9,7 +9,7 @@ import {
   useForwardPropsEmits,
 } from "reka-ui";
 import { cn } from "cn";
-import { usePortalTarget } from "#nuxt-feedback/composables/usePortalTarget";
+import { usePortalTarget } from "#nuxt-feedback/composables/use-portal-target";
 
 defineOptions({
   inheritAttrs: false,

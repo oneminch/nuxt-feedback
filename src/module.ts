@@ -54,7 +54,7 @@ export default defineNuxtModule<ModuleOptions>({
     addImports({
       name: "default",
       as: "useFeedbackWidget",
-      from: resolver.resolve("./runtime/composables/useFeedbackWidget"),
+      from: resolver.resolve("./runtime/composables/use-feedback-widget"),
     });
 
     addComponent({

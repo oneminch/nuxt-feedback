@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { reactiveOmit } from "@vueuse/core";
-import { Check } from "lucide-vue-next";
+import { Check } from "@lucide/vue";
 import {
   SelectItem,
   SelectItemIndicator,
@@ -9,7 +9,7 @@ import {
   SelectItemText,
   useForwardProps,
 } from "reka-ui";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 
 const props = defineProps<
   SelectItemProps & { class?: HTMLAttributes["class"] }
@@ -26,16 +26,14 @@ const forwardedProps = useForwardProps(delegatedProps);
     v-bind="forwardedProps"
     :class="
       cn(
-        `nfw:focus:bg-accent nfw:focus:text-accent-foreground nfw:[&_svg:not([class*='nfw:text-'])]:text-muted-foreground nfw:relative nfw:flex nfw:w-full nfw:cursor-default nfw:items-center nfw:gap-2 nfw:rounded-sm nfw:py-1.5 nfw:pr-8 nfw:pl-2 nfw:text-sm nfw:outline-hidden nfw:select-none nfw:data-[disabled]:pointer-events-none nfw:data-[disabled]:opacity-50 nfw:[&_svg]:pointer-events-none nfw:[&_svg]:shrink-0 nfw:[&_svg:not([class*='nfw:size-'])]:size-4 nfw:*:[span]:last:flex nfw:*:[span]:last:items-center nfw:*:[span]:last:gap-2`,
-        props.class
+        `focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2`,
+        props.class,
       )
     "
   >
-    <span
-      class="nfw:absolute nfw:right-2 nfw:flex nfw:size-3.5 nfw:items-center nfw:justify-center"
-    >
+    <span class="absolute right-2 flex size-3.5 items-center justify-center">
       <SelectItemIndicator>
-        <Check class="nfw:size-4" />
+        <Check class="size-4" />
       </SelectItemIndicator>
     </span>
 

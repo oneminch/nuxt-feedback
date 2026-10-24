@@ -12,7 +12,7 @@ defineProps<{
     width="32"
     height="32"
     viewBox="0 0 32 32"
-    class="nfw:size-7 nfw:text-neutral-600 nfw:dark:text-neutral-200"
+    class="size-7 text-neutral-600 dark:text-neutral-200"
   >
     <!-- Icon from Fluent Emoji High Contrast by Microsoft Corporation - https://github.com/microsoft/fluentui-emoji/blob/main/LICENSE -->
 

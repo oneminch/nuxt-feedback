@@ -173,7 +173,6 @@ The `<FeedbackWidget />` component accepts several props for customization:
     title="Send us feedback!"
     description="We value your thoughts and suggestions."
     trigger-label="💬 Feedback"
-    trigger-class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
     submit-label="Send Feedback"
     with-topics
     :topics="['General', 'Bug Report', 'Feature Request', 'UI/UX']"
@@ -200,7 +199,7 @@ interface FeedbackUIProps {
 | `title`        | `string`   | `"Feedback"`                                            | Title displayed in the feedback modal         |
 | `description`  | `string`   | `"Tell us what you think."`                             | Description text in the modal                 |
 | `triggerLabel` | `string`   | `"Feedback"`                                            | Text for the trigger button                   |
-| `triggerClass` | `string`   | `""`                                                    | Additional CSS classes for the trigger button |
+| `triggerClass` | `string`   | `""`                                                    | Additional classes for the trigger button. The widget renders in a shadow root, so only classes bundled with the widget apply; use `::part(trigger)` for anything else |
 | `submitLabel`  | `string`   | `"Submit"`                                              | Text for the submit button                    |
 | `withTopics`   | `boolean`  | `true`                                                  | Whether to show the topics selector           |
 | `topics`       | `string[]` | `["General Feedback", "Bug Report", "Feature Request"]` | Array of available feedback topics            |
@@ -231,7 +230,7 @@ function handleButtonClick() {
 
 > **Note**
 >
-> You still need to add the `<FeedbackWidget />` component to your app somewhere. If you would like to hide the default trigger and programmatically toggle the widget using your means, you can hide it by passing styles to the `triggerClass` prop.
+> You still need to add the `<FeedbackWidget />` component to your app somewhere. If you would like to hide the default trigger and programmatically toggle the widget using your means, you can hide it with CSS: `nuxt-feedback-widget::part(trigger) { display: none; }`.
 
 #### Composable API
 
@@ -421,9 +420,19 @@ export default defineEventHandler(async (event) => {
 <template>
   <FeedbackWidget
     trigger-label="?"
-    trigger-class="fixed bottom-4 right-4 w-12 h-12 rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition-colors"
   />
 </template>
+
+<style>
+nuxt-feedback-widget::part(trigger) {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+}
+</style>
 ```
 
 **Integrated in navigation:**
@@ -432,7 +441,6 @@ export default defineEventHandler(async (event) => {
 <template>
   <FeedbackWidget
     trigger-label="Feedback"
-    trigger-class="nav-link"
     title="Help us improve"
     description="Your feedback helps us build a better product"
   />
@@ -479,6 +487,13 @@ A list of issues I have noticed and I'm working on a fix for:
 - The widget doesn't currently work on fully static sites such as ones deployed to GitHub Pages as it requires a server for submitting feedback.
 - The `useFeedbackWidget` composable doesn't detect the `<FeedbackWidget />` component properly.
 
+Limitations that come from rendering the widget in a shadow root (Reka UI's document-level listeners don't see through shadow boundaries):
+
+- **Select menu:** pressing the topic select, dragging more than 10px into the menu's padding or scroll buttons and releasing there closes the menu. Normal clicks and selection are unaffected.
+- **Focus restoration:** when the form is replaced by the status view after submitting, focus isn't restored inside the open dialog/drawer. Tab navigation and focus trapping still work.
+- **Overlay position:** see "Styling conflicts" below for ancestors with `transform`, `filter` or `overflow: hidden`.
+- **Early `openWidget()`:** calling it before the widget element has registered (e.g. in a parent's `onMounted`) can be missed.
+
 ## Troubleshooting
 
 Feel free to open an issue if you are not able to resolve an issue.
@@ -493,8 +508,10 @@ Feel free to open an issue if you are not able to resolve an issue.
 
 **Styling conflicts:**
 
-- If you have custom Tailwind config, ensure compatibility
-- Use `triggerClass` prop to override default styling
+- Dark mode: the widget switches to its dark theme when `<html>` or `<body>` has the `dark` class
+- The dialog (and the drawer on small screens) opens inside the widget's own container, not on `<body>`. If you place `<FeedbackWidget />` inside an element with `transform`, `filter` or `overflow: hidden`, the overlay is positioned and clipped relative to that element instead of the viewport. Place the widget outside such containers (e.g. in `app.vue` or a layout root)
+- The widget is rendered inside a shadow root, so your app's CSS (including Tailwind) does not affect it and vice versa
+- Style the trigger from your own CSS with `nuxt-feedback-widget::part(trigger)`
 
 **Submission failures:**
 

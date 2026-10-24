@@ -7,7 +7,7 @@ import {
   type RadioGroupRootProps,
   useForwardPropsEmits,
 } from "reka-ui";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 
 const props = defineProps<
   RadioGroupRootProps & { class?: HTMLAttributes["class"] }
@@ -22,7 +22,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 <template>
   <RadioGroupRoot
     data-slot="radio-group"
-    :class="cn('nfw:grid nfw:gap-3', props.class)"
+    :class="cn('grid gap-3', props.class)"
     v-bind="forwarded"
   >
     <slot />

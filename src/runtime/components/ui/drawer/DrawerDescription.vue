@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { DrawerDescriptionProps } from "vaul-vue";
+import type { DrawerDescriptionProps } from "reka-ui";
 import type { HTMLAttributes } from "vue";
 import { reactiveOmit } from "@vueuse/core";
-import { DrawerDescription } from "vaul-vue";
-import { cn } from "#nuxt-feedback/utils";
+import { DrawerDescription } from "reka-ui";
+import { cn } from "cn";
 
 const props = defineProps<
   DrawerDescriptionProps & { class?: HTMLAttributes["class"] }
@@ -16,7 +16,7 @@ const delegatedProps = reactiveOmit(props, "class");
   <DrawerDescription
     data-slot="drawer-description"
     v-bind="delegatedProps"
-    :class="cn('nfw:text-muted-foreground nfw:text-sm', props.class)"
+    :class="cn('text-muted-foreground text-sm', props.class)"
   >
     <slot />
   </DrawerDescription>

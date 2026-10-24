@@ -18,12 +18,13 @@ import {
   DrawerTrigger,
 } from "#nuxt-feedback/components/ui/drawer";
 import { Button } from "#nuxt-feedback/components/ui/button";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 import { computed, onMounted, onUnmounted, ref, watch } from "#imports";
 import type { FeedbackUIProps, SubmissionStatus } from "../types";
 import FeedbackForm from "#nuxt-feedback/components/FeedbackForm.vue";
 import FeedbackStatus from "#nuxt-feedback/components/FeedbackStatus.vue";
-import useFeedbackWidget from "#nuxt-feedback/composables/useFeedbackWidget";
+import useFeedbackWidget from "#nuxt-feedback/composables/use-feedback-widget";
+import { providePortalTarget } from "#nuxt-feedback/composables/use-portal-target";
 import { useMediaQuery } from "@vueuse/core";
 
 withDefaults(defineProps<FeedbackUIProps>(), {
@@ -35,6 +36,8 @@ withDefaults(defineProps<FeedbackUIProps>(), {
   withTopics: true,
   topics: () => ["General Feedback", "Bug Report", "Feature Request"],
 });
+
+providePortalTarget();
 
 const { isOpen, registerWidget, unregisterWidget } = useFeedbackWidget();
 const isDesktop = useMediaQuery("(min-width: 640px)");
@@ -78,22 +81,21 @@ onUnmounted(() => {
 <template>
   <component :is="Modal.Root" v-model:open="isOpen">
     <component :is="Modal.Trigger" as-child>
-      <div class="preflight">
-        <Button
-          :class="
-            cn(
-              'nfw:bg-white nfw:hover:bg-neutral-50 nfw:text-neutral-800 nfw:border nfw:border-neutral-200 nfw:shadow-none',
-              triggerClass
-            )
-          "
-        >
-          {{ triggerLabel }}
-        </Button>
-      </div>
+      <Button
+        part="trigger"
+        :class="
+          cn(
+            'bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-200 shadow-none',
+            triggerClass,
+          )
+        "
+      >
+        {{ triggerLabel }}
+      </Button>
     </component>
     <component
       :is="Modal.Content"
-      class="nfw:sm:max-w-sm nfw:px-2 nfw:*:px-4 nfw:text-zinc-900 nfw:dark:text-zinc-50"
+      class="sm:max-w-sm px-2 *:px-4 text-zinc-900 dark:text-zinc-50"
     >
       <template v-if="!isFeedbackSubmitted">
         <component :is="Modal.Header">
@@ -119,7 +121,7 @@ onUnmounted(() => {
         />
       </template>
 
-      <DrawerFooter v-if="!isDesktop" class="nfw:pt-2">
+      <DrawerFooter v-if="!isDesktop" class="pt-2">
         <DrawerClose as-child>
           <Button variant="outline"> Close </Button>
         </DrawerClose>

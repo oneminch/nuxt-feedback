@@ -3,27 +3,27 @@ import { cva, type VariantProps } from "class-variance-authority";
 export { default as Button } from "./Button.vue";
 
 export const buttonVariants = cva(
-  "nfw:inline-flex nfw:items-center nfw:justify-center nfw:gap-2 nfw:whitespace-nowrap nfw:rounded-md nfw:text-sm nfw:font-medium nfw:transition-all nfw:disabled:pointer-events-none nfw:disabled:opacity-50 nfw:[&_svg]:pointer-events-none nfw:[&_svg:not([class*='nfw:size-'])]:size-4 nfw:shrink-0 nfw:[&_svg]:shrink-0 nfw:outline-none nfw:focus-visible:border-ring nfw:focus-visible:ring-ring/50 nfw:focus-visible:ring-[3px] nfw:aria-invalid:ring-destructive/20 nfw:dark:aria-invalid:ring-destructive/40 nfw:aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
         default:
-          "nfw:bg-primary nfw:text-primary-foreground nfw:shadow-xs nfw:hover:bg-primary/90",
+          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
         destructive:
-          "nfw:bg-destructive nfw:text-white nfw:shadow-xs nfw:hover:bg-destructive/90 nfw:focus-visible:ring-destructive/20 nfw:dark:focus-visible:ring-destructive/40 nfw:dark:bg-destructive/60",
+          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "nfw:border nfw:bg-background nfw:shadow-xs nfw:hover:bg-accent nfw:hover:text-accent-foreground nfw:dark:bg-input/30 nfw:dark:border-input nfw:dark:hover:bg-input/50",
+          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
-          "nfw:bg-secondary nfw:text-secondary-foreground nfw:shadow-xs nfw:hover:bg-secondary/80",
+          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
-          "nfw:hover:bg-accent nfw:hover:text-accent-foreground nfw:dark:hover:bg-accent/50",
-        link: "nfw:text-primary nfw:underline-offset-4 nfw:hover:underline",
+          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "nfw:h-9 nfw:px-4 nfw:py-2 nfw:has-[>svg]:px-3",
-        sm: "nfw:h-8 nfw:rounded-md nfw:gap-1.5 nfw:px-3 nfw:has-[>svg]:px-2.5",
-        lg: "nfw:h-10 nfw:rounded-md nfw:px-6 nfw:has-[>svg]:px-4",
-        icon: "nfw:size-9",
+        default: "h-9 px-4 py-2 has-[>svg]:px-3",
+        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+        icon: "size-9",
       },
     },
     defaultVariants: {

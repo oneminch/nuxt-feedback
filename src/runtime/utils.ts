@@ -1,18 +1,14 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import type { FeedbackData, FeedbackFormState } from "./types";
 import type { RouteLocationNormalizedLoadedGeneric } from "#vue-router";
 import DOMPurify from "isomorphic-dompurify";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+export const FEEDBACK_WIDGET_TAG = "nuxt-feedback-widget";
 
 export const defaultReactions = [
-  ["love-it", "Love it!"],
-  ["its-okay", "It's okay."],
-  ["not-great", "Not great."],
   ["hate-it", "Hate it!"],
+  ["not-great", "Not great."],
+  ["its-okay", "It's okay."],
+  ["love-it", "Love it!"],
 ] as const;
 
 export type Reactions = typeof defaultReactions;
@@ -118,14 +114,13 @@ export function generateFeedbackEmailHtml(
               <div><b>Full Path:</b> ${route.fullPath}</div>
               <div><b>Name:</b> ${route.name?.toString() ?? ""}</div>
               <div><b>Hash:</b> ${route.hash || "N/A"}</div>
-              <div><b>Redirected From:</b> ${
-                route.redirectedFrom
-                  ? JSON.stringify(route.redirectedFrom)
-                  : "N/A"
-              }</div>
+              <div><b>Redirected From:</b> ${route.redirectedFrom
+      ? JSON.stringify(route.redirectedFrom)
+      : "N/A"
+    }</div>
               <div><b>Query:</b> <code>${JSON.stringify(
-                route.query
-              )}</code></div>
+      route.query
+    )}</code></div>
             </td>
           </tr>
           <tr>
@@ -136,14 +131,13 @@ export function generateFeedbackEmailHtml(
           </tr>
         </tbody>
       </table>
-      ${
-        showRaw
-          ? `<div style="margin-top:1em;">
+      ${showRaw
+      ? `<div style="margin-top:1em;">
               <div style="font-weight:bold; margin-bottom:0.5em;">Raw JSON</div>
               <pre style="background:#f4f4f4;padding:1em;border-radius:4px;overflow-x:auto;font-size:0.875rem">${rawJson}</pre>
             </div>`
-          : ""
-      }
+      : ""
+    }
     </div>
   `;
 }
@@ -178,9 +172,8 @@ export function generateFeedbackGitHubIssueMarkdown(
 | **Full Path**      | ${route.fullPath} |
 | **Name**           | ${route.name?.toString() ?? "N/A"} |
 | **Hash**           | ${route.hash || "N/A"} |
-| **Redirected From**| ${
-    route.redirectedFrom ? `\`${JSON.stringify(route.redirectedFrom)}\`` : "N/A"
-  } |
+| **Redirected From**| ${route.redirectedFrom ? `\`${JSON.stringify(route.redirectedFrom)}\`` : "N/A"
+    } |
 | **Query**          | \`${JSON.stringify(route.query)}\` |
 
 ---

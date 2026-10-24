@@ -6,6 +6,7 @@ import {
   addServerHandler,
   useLogger,
   addImports,
+  addPlugin,
 } from "@nuxt/kit";
 import { defu } from "defu";
 import { name, version } from "../package.json";
@@ -26,17 +27,13 @@ export default defineNuxtModule<ModuleOptions>({
     docs: "https://github.com/oneminch/nuxt-feedback/#readme",
   },
   defaults: {
-    siteName: "Your Nuxt App",
+    siteName: "My Nuxt App",
   },
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
     const logger = useLogger("feedback-widget");
 
     nuxt.options.alias["#nuxt-feedback"] = resolver.resolve("./runtime");
-
-    // nuxt.options.alias["#nuxt-feedback/tailwind"] = resolver.resolve(
-    //   "./runtime/assets/css/tailwind.css",
-    // );
 
     // Check nitro.options.static in the nitro:init hook
 
@@ -54,20 +51,18 @@ export default defineNuxtModule<ModuleOptions>({
 
     await import("@tailwindcss/vite").then((r) => addVitePlugin(r.default));
 
-    nuxt.options.css.push(
-      resolver.resolve("./runtime/assets/css/tailwind.css")
-    );
-
     addImports({
       name: "default",
       as: "useFeedbackWidget",
-      from: resolver.resolve("./runtime/composables/useFeedbackWidget"),
+      from: resolver.resolve("./runtime/composables/use-feedback-widget"),
     });
 
     addComponent({
       name: "FeedbackWidget",
-      filePath: resolver.resolve("./runtime/components/FeedbackWidget.vue"),
+      filePath: resolver.resolve("./runtime/components/FeedbackWidgetElement.vue"),
     });
+
+    addPlugin(resolver.resolve("./runtime/plugins/feedback-widget.client"));
 
     if (options.method === "email") {
       addServerHandler({

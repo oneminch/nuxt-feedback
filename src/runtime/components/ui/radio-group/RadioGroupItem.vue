@@ -3,7 +3,7 @@ import type { RadioGroupItemProps } from "reka-ui";
 import type { HTMLAttributes } from "vue";
 import { reactiveOmit } from "@vueuse/core";
 import { RadioGroupItem, useForwardProps } from "reka-ui";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 
 const props = defineProps<
   RadioGroupItemProps & { class?: HTMLAttributes["class"] }
@@ -20,8 +20,8 @@ const forwardedProps = useForwardProps(delegatedProps);
     v-bind="forwardedProps"
     :class="
       cn(
-        'nfw:relative nfw:border-input nfw:text-primary nfw:focus-visible:border-ring nfw:focus-visible:ring-ring/50 nfw:aria-invalid:ring-destructive/20 nfw:dark:aria-invalid:ring-destructive/40 nfw:aria-invalid:border-destructive nfw:dark:bg-input/75 nfw:aspect-square nfw:size-12 nfw:flex nfw:items-center nfw:justify-center nfw:shrink-0 nfw:rounded-full nfw:border nfw:shadow-xs nfw:transition-[color,box-shadow] nfw:outline-none nfw:focus-visible:ring-[3px] nfw:disabled:cursor-not-allowed nfw:disabled:opacity-50 nfw:cursor-pointer nfw:bg-background',
-        props.class
+        'relative border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/75 aspect-square size-12 flex items-center justify-center shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer bg-background',
+        props.class,
       )
     "
   >

@@ -19,6 +19,8 @@ const registerCssProperties = (css: string) => {
   document.adoptedStyleSheets.push(sheet);
 };
 
+const DARK_MODE_TARGETS = () => [document.documentElement, document.body];
+
 export default defineNuxtPlugin((nuxtApp) => {
   if (customElements.get(FEEDBACK_WIDGET_TAG)) return;
 
@@ -31,18 +33,22 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
   });
 
-  // Consumer apps toggle `.dark` on <html>, which can't reach into the shadow
-  // root. Mirror it onto the host so the stylesheet can target `:host([data-dark])`.
+  // Consumer apps toggle `.dark` on <html> or <body>, which can't reach into the
+  // shadow root. Mirror it onto the host so the stylesheet can target
+  // `:host([data-dark])`. An attribute is used instead of a class because Vue
+  // owns the host's `class` and would overwrite it on re-render.
   class FeedbackWidgetElement extends BaseElement {
     #observer = new MutationObserver(() => this.#syncDarkMode());
 
     override connectedCallback() {
       super.connectedCallback();
       this.#syncDarkMode();
-      this.#observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class"],
-      });
+      for (const target of DARK_MODE_TARGETS()) {
+        this.#observer.observe(target, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+      }
     }
 
     override disconnectedCallback() {
@@ -53,7 +59,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     #syncDarkMode() {
       this.toggleAttribute(
         "data-dark",
-        document.documentElement.classList.contains("dark")
+        DARK_MODE_TARGETS().some((el) => el.classList.contains("dark"))
       );
     }
   }

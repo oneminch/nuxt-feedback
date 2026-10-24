@@ -501,6 +501,8 @@ Feel free to open an issue if you are not able to resolve an issue.
 
 **Styling conflicts:**
 
+- Dark mode: the widget switches to its dark theme when `<html>` or `<body>` has the `dark` class
+- The dialog (and the drawer on small screens) opens inside the widget's own container, not on `<body>`. If you place `<FeedbackWidget />` inside an element with `transform`, `filter` or `overflow: hidden`, the overlay is positioned and clipped relative to that element instead of the viewport. Place the widget outside such containers (e.g. in `app.vue` or a layout root)
 - The widget is rendered inside a shadow root, so your app's CSS (including Tailwind) does not affect it and vice versa
 - Style the trigger from your own CSS with `nuxt-feedback-widget::part(trigger)`
 

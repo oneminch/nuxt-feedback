@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { DrawerTriggerProps } from "vaul-vue";
-import { DrawerTrigger } from "vaul-vue";
+import type { DialogTriggerProps } from "reka-ui";
+import { DialogTrigger } from "reka-ui";
 
-const props = defineProps<DrawerTriggerProps>();
+const props = defineProps<DialogTriggerProps>();
 </script>
 
 <template>
-  <DrawerTrigger data-slot="drawer-trigger" v-bind="props">
+  <DialogTrigger data-slot="drawer-trigger" v-bind="props">
     <slot />
-  </DrawerTrigger>
+  </DialogTrigger>
 </template>

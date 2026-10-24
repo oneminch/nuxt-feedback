@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { DrawerCloseProps } from "vaul-vue";
-import { DrawerClose } from "vaul-vue";
+import type { DialogCloseProps } from "reka-ui";
+import { DialogClose } from "reka-ui";
 
-const props = defineProps<DrawerCloseProps>();
+const props = defineProps<DialogCloseProps>();
 </script>
 
 <template>
-  <DrawerClose data-slot="drawer-close" v-bind="props">
+  <DialogClose data-slot="drawer-close" v-bind="props">
     <slot />
-  </DrawerClose>
+  </DialogClose>
 </template>

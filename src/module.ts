@@ -27,7 +27,7 @@ export default defineNuxtModule<ModuleOptions>({
     docs: "https://github.com/oneminch/nuxt-feedback/#readme",
   },
   defaults: {
-    siteName: "Your Nuxt App",
+    siteName: "My Nuxt App",
   },
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);

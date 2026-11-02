@@ -69,5 +69,10 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // A single modal serves every <FeedbackWidget /> trigger. It is attached to
   // <body> so ancestor transforms/filters can't affect its fixed positioning.
-  document.body.appendChild(new FeedbackWidgetElement());
+  // Mount after the app has mounted: a plugin runs inside Nuxt's app context,
+  // where `inject()` would read the Nuxt app's provides instead of the
+  // element's own, and the portal target provided by the modal would be lost.
+  nuxtApp.hook("app:mounted", () => {
+    document.body.appendChild(new FeedbackWidgetElement());
+  });
 });

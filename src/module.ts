@@ -59,7 +59,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponent({
       name: "FeedbackWidget",
-      filePath: resolver.resolve("./runtime/components/FeedbackWidgetElement.vue"),
+      filePath: resolver.resolve("./runtime/components/FeedbackTrigger.vue"),
     });
 
     addPlugin(resolver.resolve("./runtime/plugins/feedback-widget.client"));

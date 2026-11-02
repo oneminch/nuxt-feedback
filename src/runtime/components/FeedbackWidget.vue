@@ -5,7 +5,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "#nuxt-feedback/components/ui/dialog";
 import {
   Drawer,
@@ -15,31 +14,30 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "#nuxt-feedback/components/ui/drawer";
 import { Button } from "#nuxt-feedback/components/ui/button";
-import { cn } from "cn";
-import { computed, onMounted, onUnmounted, ref, watch } from "#imports";
-import type { FeedbackUIProps, SubmissionStatus } from "../types";
+import { computed, ref, watch } from "#imports";
+import type { SubmissionStatus } from "../types";
 import FeedbackForm from "#nuxt-feedback/components/FeedbackForm.vue";
 import FeedbackStatus from "#nuxt-feedback/components/FeedbackStatus.vue";
 import useFeedbackWidget from "#nuxt-feedback/composables/use-feedback-widget";
+import useFeedbackConfig from "#nuxt-feedback/composables/use-feedback-config";
 import { providePortalTarget } from "#nuxt-feedback/composables/use-portal-target";
 import { useMediaQuery } from "@vueuse/core";
 
-withDefaults(defineProps<FeedbackUIProps>(), {
+const config = useFeedbackConfig();
+const options = computed(() => ({
   title: "Feedback",
   description: "Tell us what you think.",
-  triggerLabel: "Share Feedback",
-  triggerClass: "",
   submitLabel: "Submit",
   withTopics: true,
-  topics: () => ["General Feedback", "Bug Report", "Feature Request"],
-});
+  topics: ["General Feedback", "Bug Report", "Feature Request"],
+  ...config.value,
+}));
 
 providePortalTarget();
 
-const { isOpen, registerWidget, unregisterWidget } = useFeedbackWidget();
+const { isOpen } = useFeedbackWidget();
 const isDesktop = useMediaQuery("(min-width: 640px)");
 
 const isFeedbackSubmitted = ref(false);
@@ -55,7 +53,6 @@ const handleAfterSubmit = (status: "success" | "failure", message: string) => {
 
 const Modal = computed(() => ({
   Root: isDesktop.value ? Dialog : Drawer,
-  Trigger: isDesktop.value ? DialogTrigger : DrawerTrigger,
   Content: isDesktop.value ? DialogContent : DrawerContent,
   Header: isDesktop.value ? DialogHeader : DrawerHeader,
   Title: isDesktop.value ? DialogTitle : DrawerTitle,
@@ -68,47 +65,26 @@ watch(isOpen, (newValue: boolean) => {
     submissionStatus.value = { status: "" as SubmissionStatus, message: "" };
   }
 });
-
-onMounted(() => {
-  registerWidget();
-});
-
-onUnmounted(() => {
-  unregisterWidget();
-});
 </script>
 
 <template>
   <component :is="Modal.Root" v-model:open="isOpen">
-    <component :is="Modal.Trigger" as-child>
-      <Button
-        part="trigger"
-        :class="
-          cn(
-            'bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-200 shadow-none',
-            triggerClass,
-          )
-        "
-      >
-        {{ triggerLabel }}
-      </Button>
-    </component>
     <component
       :is="Modal.Content"
       class="sm:max-w-sm px-2 *:px-4 text-zinc-900 dark:text-zinc-50"
     >
       <template v-if="!isFeedbackSubmitted">
         <component :is="Modal.Header">
-          <component :is="Modal.Title">{{ title }}</component>
+          <component :is="Modal.Title">{{ options.title }}</component>
           <component :is="Modal.Description">
-            {{ description }}
+            {{ options.description }}
           </component>
         </component>
 
         <FeedbackForm
-          :submit-label="submitLabel"
-          :with-topics="withTopics"
-          :topics="topics"
+          :submit-label="options.submitLabel"
+          :with-topics="options.withTopics"
+          :topics="options.topics"
           @after-submit="handleAfterSubmit"
         />
       </template>

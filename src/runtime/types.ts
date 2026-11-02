@@ -16,6 +16,11 @@ export interface FeedbackUIProps {
   topics?: string[];
 }
 
+export type FeedbackModalProps = Omit<
+  FeedbackUIProps,
+  "triggerLabel" | "triggerClass"
+>;
+
 export type FeedbackOption = Reactions[number];
 
 export type FeedbackFormState = Pick<

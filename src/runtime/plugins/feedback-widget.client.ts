@@ -66,4 +66,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   registerCssProperties(widgetCss);
   customElements.define(FEEDBACK_WIDGET_TAG, FeedbackWidgetElement);
+
+  // A single modal serves every <FeedbackWidget /> trigger. It is attached to
+  // <body> so ancestor transforms/filters can't affect its fixed positioning.
+  document.body.appendChild(new FeedbackWidgetElement());
 });

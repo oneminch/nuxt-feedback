@@ -7,6 +7,8 @@ import useFeedbackConfig from "#nuxt-feedback/composables/use-feedback-config";
 const props = withDefaults(defineProps<FeedbackUIProps>(), {
   triggerLabel: "Share Feedback",
   triggerClass: "",
+  // Boolean props default to false when absent; keep the modal default.
+  withTopics: true,
 });
 
 const { isOpen, openWidget, registerWidget, unregisterWidget } =

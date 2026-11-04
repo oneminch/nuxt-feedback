@@ -10,14 +10,15 @@ import {
 } from "@nuxt/kit";
 import { defu } from "defu";
 import { name, version } from "../package.json";
+import { SUBMISSION_METHODS as METHODS } from './runtime/utils';
+
+export type * from "./runtime/types";
 
 export interface ModuleOptions {
-  method: "email" | "github" | "custom-endpoint";
+  method: typeof METHODS[number]
   siteName?: string;
   customEndpoint?: string;
 }
-
-export type * from "./runtime/types";
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -31,7 +32,7 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
-    const logger = useLogger("feedback-widget");
+    const logger = useLogger(name);
 
     nuxt.options.alias["#nuxt-feedback"] = resolver.resolve("./runtime");
 
@@ -45,8 +46,14 @@ export default defineNuxtModule<ModuleOptions>({
     //   );
     // }
 
-    if (!options.method) {
-      logger.warn("[Feedback Widget]: Please Pick a Default Feedback Method.");
+    let handler: string;
+
+    if (METHODS.includes(options.method)) {
+      handler = resolver.resolve(`./runtime/server/api/feedback/${options.method}`);
+    } else {
+      logger.warn("[Feedback Widget]: Please set a default feedback method in your config.");
+
+      handler = resolver.resolve("./runtime/server/api/feedback/error");
     }
 
     await import("@tailwindcss/vite").then((r) => addVitePlugin(r.default));
@@ -59,38 +66,18 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponent({
       name: "FeedbackWidget",
-      filePath: resolver.resolve("./runtime/components/FeedbackTrigger.vue"),
+      filePath: resolver.resolve("./runtime/components/feedback-trigger.vue"),
     });
 
     addPlugin(resolver.resolve("./runtime/plugins/feedback-widget.client"));
 
-    if (options.method === "email") {
-      addServerHandler({
-        route: "/api/submit-feedback",
-        handler: resolver.resolve("./runtime/server/api/feedback/email"),
-        method: "post",
-      });
-    } else if (options.method === "github") {
-      addServerHandler({
-        route: "/api/submit-feedback",
-        handler: resolver.resolve("./runtime/server/api/feedback/github"),
-        method: "post",
-      });
-    } else if (options.method === "custom-endpoint") {
-      addServerHandler({
-        route: "/api/submit-feedback",
-        handler: resolver.resolve("./runtime/server/api/feedback/custom"),
-        method: "post",
-      });
-    } else {
-      addServerHandler({
-        route: "/api/submit-feedback",
-        handler: resolver.resolve("./runtime/server/api/feedback/error"),
-        method: "post",
-      });
-    }
+    addServerHandler({
+      route: "/api/submit-feedback",
+      handler,
+      method: "post",
+    });
 
-    const moduleRuntimeConfig =
+    const moduleRuntimeConfig: any =
       nuxt.options.runtimeConfig.public.feedbackWidget;
 
     nuxt.options.runtimeConfig.public.feedbackWidget = defu(

@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import { defineCustomElement } from "vue";
 import { defineNuxtPlugin } from "#imports";
-import FeedbackWidget from "#nuxt-feedback/components/FeedbackWidget.vue";
+import FeedbackWidget from "#nuxt-feedback/components/feedback-widget.vue";
 import { FEEDBACK_WIDGET_TAG } from "#nuxt-feedback/utils";
 import widgetCss from "../assets/css/tailwind.css?inline";
 

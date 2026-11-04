@@ -1,5 +1,5 @@
 import { defineEventHandler } from "#imports";
-import { logger } from "#nuxt-feedback/lib/utils";
+import { logger } from "#nuxt-feedback/utils";
 
 export default defineEventHandler(() => {
   logger.error("Missing feedback method for widget.");

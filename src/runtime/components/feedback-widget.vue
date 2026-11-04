@@ -18,8 +18,8 @@ import {
 import { Button } from "#nuxt-feedback/components/ui/button";
 import { computed, ref, watch } from "#imports";
 import type { SubmissionStatus } from "../types";
-import FeedbackForm from "#nuxt-feedback/components/FeedbackForm.vue";
-import FeedbackStatus from "#nuxt-feedback/components/FeedbackStatus.vue";
+import FeedbackForm from "#nuxt-feedback/components/feedback-form.vue";
+import FeedbackStatus from "#nuxt-feedback/components/feedback-status.vue";
 import useFeedbackWidget from "#nuxt-feedback/composables/use-feedback-widget";
 import useFeedbackConfig from "#nuxt-feedback/composables/use-feedback-config";
 import { providePortalTarget } from "#nuxt-feedback/composables/use-portal-target";

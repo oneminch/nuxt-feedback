@@ -21,9 +21,9 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from "#nuxt-feedback/components/ui/radio-group";
-import FormValidationMessage from "#nuxt-feedback/components/FormValidationMessage.vue";
+import FormValidationMessage from "#nuxt-feedback/components/form-validation-message.vue";
 import type { FeedbackUIProps, FeedbackFormState } from "../types";
-import Emoji from "#nuxt-feedback/components/icons/Emoji.vue";
+import Emoji from "#nuxt-feedback/components/icons/emoji.vue";
 import { createFormData, defaultReactions } from "#nuxt-feedback/utils";
 
 const formProps =
@@ -85,7 +85,7 @@ const submitFeedback = async () => {
       "failure",
       error instanceof Error
         ? error.message
-        : "Unknown error. Please try again later."
+        : "Unknown error. Please try again later.",
     );
   } finally {
     // Reset form state after submission

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SuccessIcon from "#nuxt-feedback/components/icons/Success.vue";
-import FailureIcon from "#nuxt-feedback/components/icons/Failure.vue";
+import SuccessIcon from "#nuxt-feedback/components/icons/success.vue";
+import FailureIcon from "#nuxt-feedback/components/icons/failure.vue";
 import type { SubmissionStatus } from "../types";
 
 defineProps<{
@@ -15,14 +15,9 @@ defineProps<{
     role="status"
     aria-live="polite"
   >
-    <SuccessIcon
-      v-if="status === 'success'"
-      class="size-16 text-green-500"
-    />
+    <SuccessIcon v-if="status === 'success'" class="size-16 text-green-500" />
     <FailureIcon v-else class="size-16 text-rose-500" />
-    <h3
-      class="text-xl text-center text-zinc-900 dark:text-zinc-50 font-medium"
-    >
+    <h3 class="text-xl text-center text-zinc-900 dark:text-zinc-50 font-medium">
       {{ message }}
     </h3>
   </div>

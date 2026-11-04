@@ -13,10 +13,7 @@ const { openWidget } = useFeedbackWidget();
         trigger-label="💚 Share Feedback (Component)"
         trigger-class="btn"
       />
-      <!-- <FeedbackWidget
-        trigger-label="💚 Share Feedback (Without Topics)"
-        :with-topics="false"
-      /> -->
+
       <button class="btn" @click="openWidget">
         💚 Share Feedback (Composable)
       </button>

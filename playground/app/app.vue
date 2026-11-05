@@ -98,8 +98,8 @@ h1 span {
 
 .btn {
   height: 2.25rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.5rem;
+  padding: 0.25rem 1.25rem;
+  border-radius: 5rem;
   box-sizing: border-box;
   background-color: #fff;
   color: #262626;

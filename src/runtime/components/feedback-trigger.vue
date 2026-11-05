@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref, watch, watchEffect } from "#imports";
+import {
+  nextTick,
+  onMounted,
+  onUnmounted,
+  ref,
+  watch,
+  watchEffect,
+} from "#imports";
 import type { FeedbackUIProps } from "../types";
 import useFeedbackWidget from "#nuxt-feedback/composables/use-feedback-widget";
 import useFeedbackConfig from "#nuxt-feedback/composables/use-feedback-config";
@@ -60,28 +67,78 @@ onUnmounted(unregisterWidget);
 /* Zero specificity so any consumer styles override these defaults. */
 @layer base {
   :where(.feedback-trigger) {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+
+    box-sizing: border-box;
     display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 1rem;
-    border: 1px solid #e5e5e5;
+    gap: 0.5rem;
+    height: 2.25rem;
+    padding-block: 0.5rem;
+    padding-inline: 1rem;
+    border: 1px solid var(--border);
     border-radius: 0.375rem;
-    background: #fff;
-    color: #262626;
-    font: inherit;
+    background-color: var(--background);
+    color: var(--foreground);
     font-size: 0.875rem;
     font-weight: 500;
     line-height: 1.25rem;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
     cursor: pointer;
+    outline-style: none;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  :where(.feedback-trigger:hover) {
-    background: #fafafa;
+  @media (hover: hover) {
+    :where(.feedback-trigger:hover) {
+      background-color: var(--accent);
+      color: var(--accent-foreground);
+    }
   }
 
   :where(.feedback-trigger:focus-visible) {
-    outline: 2px solid #737373;
-    outline-offset: 2px;
+    border-color: var(--ring);
+    box-shadow:
+      0 0 0 3px mix(in oklab, var(--ring) 50%, transparent),
+      0 1px 2px 0 rgb(0 0 0 / 5%);
+  }
+
+  :where(.feedback-trigger:disabled) {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  :where(.feedback-trigger:has(> svg)) {
+    padding-inline: 0.75rem;
+  }
+
+  :where(.feedback-trigger[aria-invalid="true"]) {
+    border-color: var(--destructive);
+  }
+
+  :where(.feedback-trigger[aria-invalid="true"]:focus-visible) {
+    box-shadow:
+      0 0 0 3px mix(in oklab, var(--destructive) 20%, transparent),
+      0 1px 2px 0 rgb(0 0 0 / 5%);
+  }
+
+  :where(.feedback-trigger svg) {
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  :where(.feedback-trigger svg:not([class*="size-"])) {
+    width: 1rem;
+    height: 1rem;
   }
 }
 </style>

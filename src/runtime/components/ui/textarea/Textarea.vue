@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { useVModel } from "@vueuse/core";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 
 const props = defineProps<{
   class?: HTMLAttributes["class"];
@@ -25,8 +25,8 @@ const modelValue = useVModel(props, "modelValue", emits, {
     data-slot="textarea"
     :class="
       cn(
-        'nfw:border-input nfw:placeholder:text-muted-foreground nfw:focus-visible:border-ring nfw:focus-visible:ring-ring/50 nfw:aria-invalid:ring-destructive/20 nfw:dark:aria-invalid:ring-destructive/40 nfw:aria-invalid:border-destructive nfw:dark:bg-input/30 nfw:flex nfw:field-sizing-content nfw:min-h-16 nfw:w-full nfw:rounded-md nfw:border nfw:bg-transparent nfw:px-3 nfw:py-2 nfw:text-base nfw:shadow-xs nfw:transition-[color,box-shadow] nfw:outline-none nfw:focus-visible:ring-[3px] nfw:disabled:cursor-not-allowed nfw:disabled:opacity-50 nfw:md:text-sm',
-        props.class
+        'border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+        props.class,
       )
     "
   />

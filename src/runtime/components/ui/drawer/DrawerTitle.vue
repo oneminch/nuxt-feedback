@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { DrawerTitleProps } from "vaul-vue";
+import type { DrawerTitleProps } from "reka-ui";
 import type { HTMLAttributes } from "vue";
 import { reactiveOmit } from "@vueuse/core";
-import { DrawerTitle } from "vaul-vue";
-import { cn } from "#nuxt-feedback/utils";
+import { DrawerTitle } from "reka-ui";
+import { cn } from "cn";
 
 const props = defineProps<
   DrawerTitleProps & { class?: HTMLAttributes["class"] }
@@ -16,7 +16,7 @@ const delegatedProps = reactiveOmit(props, "class");
   <DrawerTitle
     data-slot="drawer-title"
     v-bind="delegatedProps"
-    :class="cn('nfw:text-foreground nfw:font-semibold', props.class)"
+    :class="cn('text-foreground font-semibold', props.class)"
   >
     <slot />
   </DrawerTitle>

@@ -5,7 +5,7 @@ import {
   useRuntimeConfig,
 } from "#imports";
 import type { FeedbackData } from "../../../types";
-import { generateFeedbackEmailHtml, logger } from "#nuxt-feedback/lib/utils";
+import { generateFeedbackEmailHtml, logger } from "#nuxt-feedback/utils";
 import { Resend } from "resend";
 
 export default defineEventHandler(async (event) => {

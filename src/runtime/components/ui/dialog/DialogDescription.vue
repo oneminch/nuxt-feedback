@@ -6,7 +6,7 @@ import {
   type DialogDescriptionProps,
   useForwardProps,
 } from "reka-ui";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 
 const props = defineProps<
   DialogDescriptionProps & { class?: HTMLAttributes["class"] }
@@ -21,7 +21,7 @@ const forwardedProps = useForwardProps(delegatedProps);
   <DialogDescription
     data-slot="dialog-description"
     v-bind="forwardedProps"
-    :class="cn('nfw:text-muted-foreground nfw:text-sm', props.class)"
+    :class="cn('text-muted-foreground text-sm', props.class)"
   >
     <slot />
   </DialogDescription>

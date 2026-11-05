@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from "vue";
 import { reactiveOmit } from "@vueuse/core";
 import { Label, type LabelProps } from "reka-ui";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 
 const props = defineProps<LabelProps & { class?: HTMLAttributes["class"] }>();
 
@@ -15,8 +15,8 @@ const delegatedProps = reactiveOmit(props, "class");
     v-bind="delegatedProps"
     :class="
       cn(
-        'nfw:flex nfw:items-center nfw:gap-2 nfw:text-sm nfw:leading-none nfw:text-foreground nfw:font-medium nfw:select-none nfw:group-data-[disabled=true]:pointer-events-none nfw:group-data-[disabled=true]:opacity-50 nfw:peer-disabled:cursor-not-allowed nfw:peer-disabled:opacity-50',
-        props.class
+        'flex items-center gap-2 text-sm leading-none text-foreground font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
+        props.class,
       )
     "
   >

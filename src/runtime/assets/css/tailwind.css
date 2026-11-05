@@ -1,15 +1,18 @@
-@layer theme, base, components, utilities;
-
-@import "tailwindcss/theme.css" layer(theme) source(none) prefix(nfw);
-@import "./preflight.css" layer(base);
-@import "tailwindcss/utilities.css" layer(utilities) source(none) prefix(nfw);
+@import "tailwindcss" source(none);
 @import "tw-animate-css";
 @source "../../components";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (:host([data-dark]) &);
 
-:root {
-  --ui-primary: var(--ui-color-neutral-100);
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
+  }
+}
+
+:host {
+  display: contents;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -34,8 +37,7 @@
   --radio-checked-background: oklch(93.8% 0.127 124.321);
 }
 
-.dark {
-  --ui-primary: var(--ui-color-neutral-800);
+:host([data-dark]) {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.141 0.005 285.823);

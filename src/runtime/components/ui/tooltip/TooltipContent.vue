@@ -8,7 +8,8 @@ import {
   TooltipPortal,
   useForwardPropsEmits,
 } from "reka-ui";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
+import { usePortalTarget } from "#nuxt-feedback/composables/use-portal-target";
 
 defineOptions({
   inheritAttrs: false,
@@ -19,32 +20,32 @@ const props = withDefaults(
   {
     class: "",
     sideOffset: 4,
-  }
+  },
 );
 
 const emits = defineEmits<TooltipContentEmits>();
 
 const delegatedProps = reactiveOmit(props, "class");
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const portalTarget = usePortalTarget();
 </script>
 
 <template>
-  <TooltipPortal>
+  <TooltipPortal :to="portalTarget">
     <TooltipContent
       data-slot="tooltip-content"
       v-bind="{ ...forwarded, ...$attrs }"
       :class="
         cn(
-          'preflight',
-          'nfw:bg-primary nfw:text-primary-foreground nfw:animate-in nfw:fade-in-0 nfw:zoom-in-95 nfw:data-[state=closed]:animate-out nfw:data-[state=closed]:fade-out-0 nfw:data-[state=closed]:zoom-out-95 nfw:data-[side=bottom]:slide-in-from-top-2 nfw:data-[side=left]:slide-in-from-right-2 nfw:data-[side=right]:slide-in-from-left-2 nfw:data-[side=top]:slide-in-from-bottom-2 nfw:z-50 nfw:w-fit nfw:rounded-md nfw:px-3 nfw:py-1.5 nfw:text-xs nfw:text-balance',
-          props.class
+          'bg-primary text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-fit rounded-md px-3 py-1.5 text-xs text-balance',
+          props.class,
         )
       "
     >
       <slot />
 
       <!-- <TooltipArrow
-        class="nfw:bg-primary nfw:fill-primary nfw:z-50 nfw:size-2.5 nfw:translate-y-[calc(-50%_-_2px)] nfw:rotate-45 nfw:rounded-[2px]"
+        class="bg-primary fill-primary z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px]"
       /> -->
     </TooltipContent>
   </TooltipPortal>

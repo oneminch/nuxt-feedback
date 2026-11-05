@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { reactiveOmit } from "@vueuse/core";
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown } from "@lucide/vue";
 import {
   SelectScrollDownButton,
   type SelectScrollDownButtonProps,
   useForwardProps,
 } from "reka-ui";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 
 const props = defineProps<
   SelectScrollDownButtonProps & { class?: HTMLAttributes["class"] }
@@ -23,14 +23,11 @@ const forwardedProps = useForwardProps(delegatedProps);
     data-slot="select-scroll-down-button"
     v-bind="forwardedProps"
     :class="
-      cn(
-        'nfw:flex nfw:cursor-default nfw:items-center nfw:justify-center nfw:py-1',
-        props.class
-      )
+      cn('flex cursor-default items-center justify-center py-1', props.class)
     "
   >
     <slot>
-      <ChevronDown class="nfw:size-4" />
+      <ChevronDown class="size-4" />
     </slot>
   </SelectScrollDownButton>
 </template>

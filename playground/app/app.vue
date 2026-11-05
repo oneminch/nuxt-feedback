@@ -25,9 +25,9 @@ useSeoMeta({
   <div class="container">
     <header>
       <h1>
-        <nuxt-link class="" to="/"
-          >Playground for <span>Nuxt Feedback</span></nuxt-link
-        >
+        <nuxt-link to="/">
+          Playground for <span>Nuxt Feedback</span>
+        </nuxt-link>
       </h1>
 
       <nav>
@@ -43,6 +43,13 @@ useSeoMeta({
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+
+    <FeedbackWidget
+      aria-label="Share Feedback"
+      trigger-label="💚"
+      trigger-class="btn--icon btn--fixed"
+      :with-topics="false"
+    />
   </div>
 </template>
 
@@ -91,8 +98,8 @@ h1 span {
 
 .btn {
   height: 2.25rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.5rem;
+  padding: 0.25rem 1.25rem;
+  border-radius: 5rem;
   box-sizing: border-box;
   background-color: #fff;
   color: #262626;
@@ -123,10 +130,23 @@ h1 span {
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1.2;
+  /* line-height: 1.2; */
   border-radius: 50rem;
   padding: 0.5rem;
   font-size: 1rem;
+}
+
+.btn--fixed {
+  width: 3rem;
+  height: 3rem;
+  position: fixed;
+  right: 2.5rem;
+  bottom: 2.5rem;
+  &:hover {
+    @media (hover: hover) {
+      background-color: #eee;
+    }
+  }
 }
 
 .btn--dark {

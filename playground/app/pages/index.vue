@@ -9,14 +9,8 @@ const { openWidget } = useFeedbackWidget();
     <h2 class="">Help Us Improve By Sharing Your Feedback.</h2>
 
     <div class="buttons">
-      <FeedbackWidget
-        trigger-label="💚 Share Feedback (Component)"
-        trigger-class="btn"
-      />
-      <!-- <FeedbackWidget
-        trigger-label="💚 Share Feedback (Without Topics)"
-        :with-topics="false"
-      /> -->
+      <FeedbackWidget trigger-label="💚 Share Feedback (Component)" />
+
       <button class="btn" @click="openWidget">
         💚 Share Feedback (Composable)
       </button>

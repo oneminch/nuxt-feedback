@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { Primitive, type PrimitiveProps } from "reka-ui";
-import { cn } from "#nuxt-feedback/utils";
+import { cn } from "cn";
 import { type ButtonVariants, buttonVariants } from ".";
 
 interface Props extends PrimitiveProps {
@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
     :as="as"
     :as-child="asChild"
     :class="
-      cn('nfw:cursor-pointer', buttonVariants({ variant, size }), props.class)
+      cn('cursor-pointer', buttonVariants({ variant, size }), props.class)
     "
   >
     <slot />

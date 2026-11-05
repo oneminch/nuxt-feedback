@@ -58,28 +58,30 @@ onUnmounted(unregisterWidget);
 
 <style>
 /* Zero specificity so any consumer styles override these defaults. */
-:where(.feedback-trigger) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem 1rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 0.375rem;
-  background: #fff;
-  color: #262626;
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem;
-  cursor: pointer;
-}
+@layer base {
+  :where(.feedback-trigger) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.375rem;
+    background: #fff;
+    color: #262626;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    cursor: pointer;
+  }
 
-:where(.feedback-trigger:hover) {
-  background: #fafafa;
-}
+  :where(.feedback-trigger:hover) {
+    background: #fafafa;
+  }
 
-:where(.feedback-trigger:focus-visible) {
-  outline: 2px solid #737373;
-  outline-offset: 2px;
+  :where(.feedback-trigger:focus-visible) {
+    outline: 2px solid #737373;
+    outline-offset: 2px;
+  }
 }
 </style>

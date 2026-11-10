@@ -16,7 +16,7 @@ catalogs:
     eslint: ^10.14.0
     nuxt: ^4.6.4
     typescript: ^6.0.3
-    vue-tsc: ^3.3.12
+    vue-tsc: ^3.3.14
 
   package:
     '@lucide/vue': ^1.68.0

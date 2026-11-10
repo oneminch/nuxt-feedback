@@ -77,7 +77,7 @@ export default defineNuxtConfig({
 
   feedbackWidget: {
     method: "email", // Required: Choose your submission method
-    siteName: "My App", // Optional: Default is "Your Nuxt App"
+    siteName: "My App", // Optional: Default is "My Nuxt App"
   },
 });
 ```
@@ -109,7 +109,7 @@ export default defineNuxtConfig({
 | Option           | Type                                       | Required | Default           | Description                                                        |
 | ---------------- | ------------------------------------------ | -------- | ----------------- | ------------------------------------------------------------------ |
 | `method`         | `'email' \| 'github' \| 'custom-endpoint'` | ✅       | -                 | Feedback submission method                                         |
-| `siteName`       | `string`                                   | ❌       | `"Your Nuxt App"` | Site name used in feedback submissions                             |
+| `siteName`       | `string`                                   | ❌       | `"My Nuxt App"` | Site name used in feedback submissions                             |
 | `customEndpoint` | `string`                                   | ❌       | -                 | Custom endpoint path (required when method is `'custom-endpoint'`) |
 
 ### Environment Variables
@@ -230,7 +230,7 @@ function handleButtonClick() {
 
 > **Note**
 >
-> You still need to add the `<FeedbackWidget />` component to your app somewhere. If you would like to hide the default trigger and programmatically toggle the widget using your means, you can hide it with CSS, e.g. `trigger-class="hidden"`.
+> You still need to add the `<FeedbackWidget />` component to your app somewhere. If you would like to hide the default trigger and programmatically toggle the widget using your means, you can hide it using CSS, e.g. `trigger-class="hidden"`.
 
 #### Composable API
 
@@ -354,7 +354,7 @@ interface FeedbackDataType {
       fullPath: string;
       hash: string;
       query: LocationQuery;
-      name: RouteRecordNameGeneric;
+      name: RouteRecordNameGeneric; // From vue-router
       path: string;
       redirectedFrom: RouteLocationGeneric | undefined;
     };
@@ -366,7 +366,7 @@ interface FeedbackDataType {
 }
 ```
 
-> **Imporant:** The feedback data is forwarded as is to your custom endpoint. Since user input can't be trusted, you'll need to implement some form of sanitization in your endpoint.
+> **Imporant:** The feedback data is forwarded as is to your custom endpoint. Since user input can't be trusted, you might need to implement some form of sanitization in your endpoint.
 
 **Example Custom Handler:**
 
@@ -462,7 +462,7 @@ button.feedback-trigger {
 
 ### Programmatic Control
 
-> This approach currently has some issues.
+> This approach currently has [some issues](#known-issues).
 
 ```vue
 <script setup lang="ts">
@@ -487,14 +487,9 @@ A list of issues I have noticed and I'm working on a fix for:
 - The widget doesn't currently work on fully static sites such as ones deployed to GitHub Pages as it requires a server for submitting feedback.
 - The `useFeedbackWidget` composable doesn't detect the `<FeedbackWidget />` component properly.
 
-Limitations that come from rendering the modal in a shadow root (Reka UI's document-level listeners don't see through shadow boundaries):
-
-- **Select menu:** pressing the topic select, dragging more than 10px into the menu's padding or scroll buttons and releasing there closes the menu. Normal clicks and selection are unaffected.
-- **Focus restoration:** when the form is replaced by the status view after submitting, focus isn't restored inside the open dialog/drawer. Tab navigation and focus trapping still work.
-
 ## Troubleshooting
 
-Feel free to open an issue if you are not able to resolve an issue.
+Feel free to open an issue to report bugs or suggest features.
 
 ### Common Issues
 
@@ -503,12 +498,6 @@ Feel free to open an issue if you are not able to resolve an issue.
 - Ensure the module is properly added to your `nuxt.config.ts`
 - Check that you've set a valid `method` in your configuration
 - Verify the component is imported (it should be auto-imported) and added to your app
-
-**Styling conflicts:**
-
-- Dark mode: the widget switches to its dark theme when `<html>` or `<body>` has the `dark` class
-- The trigger is a plain `<button class="feedback-trigger">` with zero-specificity default styles; style it freely
-- The dialog/drawer is rendered in a single shadow root appended to `<body>`, so your app's CSS (including Tailwind) does not affect it and vice versa
 
 **Submission failures:**
 

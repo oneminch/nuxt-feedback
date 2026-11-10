@@ -3,7 +3,7 @@
   "version": "0.7.0",
   "description": "Easily integrate a feedback widget into your Nuxt app.",
   "repository": "github:oneminch/nuxt-feedback",
-  "homepage": "https://github.com/oneminch/nuxt-feedback/#readme",
+  "homepage": "https://nuxt-feedback.minch.dev",
   "license": "MIT",
   "author": {
     "name": "Dawit",

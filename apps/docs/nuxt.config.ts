@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["../src/module"],
+  modules: ["@minch/nuxt-feedback", "@nuxt/eslint"],
 
   // css: ["~/assets/css/main.css"],
 

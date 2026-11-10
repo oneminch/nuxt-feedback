@@ -11,7 +11,8 @@ export default createConfigForNuxt({
   },
   dirs: {
     src: [
-      './playground',
+      './apps/docs',
+      './packages/nuxt-feedback',
     ],
   },
 })

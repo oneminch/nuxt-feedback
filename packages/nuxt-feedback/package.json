@@ -1,0 +1,74 @@
+{
+  "name": "@minch/nuxt-feedback",
+  "version": "0.7.0",
+  "description": "Easily integrate a feedback widget into your Nuxt app.",
+  "repository": "github:oneminch/nuxt-feedback",
+  "homepage": "https://github.com/oneminch/nuxt-feedback/#readme",
+  "license": "MIT",
+  "author": {
+    "name": "Dawit",
+    "url": "https://bsky.app/profile/minch.dev"
+  },
+  "type": "module",
+  "keywords": [
+    "nuxt",
+    "feedback",
+    "nuxt-module",
+    "feedback-widget"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
+    },
+    "./runtime/*": "./dist/runtime/*"
+  },
+  "main": "./dist/module.mjs",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/types.d.mts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build build",
+    "build:stub": "nuxt-module-build build --stub",
+    "build:prepare": "nuxt-module-build prepare",
+    "release": "pnpm run prepack && pnpm publish && git push --follow-tags",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@lucide/vue": "catalog:package",
+    "@nuxt/kit": "catalog:package",
+    "@tailwindcss/vite": "catalog:package",
+    "@vueuse/core": "catalog:shared",
+    "class-variance-authority": "catalog:package",
+    "cn": "catalog:package",
+    "defu": "catalog:package",
+    "isomorphic-dompurify": "catalog:package",
+    "reka-ui": "catalog:package",
+    "resend": "catalog:package",
+    "tailwindcss": "catalog:package",
+    "tw-animate-css": "catalog:package"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "catalog:shared",
+    "@nuxt/module-builder": "catalog:package",
+    "@nuxt/schema": "catalog:package",
+    "@nuxt/test-utils": "catalog:package",
+    "@types/node": "catalog:package",
+    "changelogen": "catalog:package",
+    "nuxt": "catalog:shared",
+    "vitest": "catalog:package"
+  }
+}

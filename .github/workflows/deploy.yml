@@ -13,5 +13,5 @@ jobs:
       id-token: write
     uses: oneminch/workflows/.github/workflows/gh-pages-deploy.yml@v1
     with:
-      working-directory: './playground'
-      artifact-path: './playground/.output/public'
+      working-directory: './apps/docs'
+      artifact-path: './apps/docs/.output/public'

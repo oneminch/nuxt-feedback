@@ -12,3 +12,5 @@ jobs:
       contents: read
       id-token: write
     uses: oneminch/workflows/.github/workflows/npm-publish.yml@v1
+    with:
+      package-filter: '@minch/nuxt-feedback'

@@ -1,0 +1,19 @@
+{
+  "name": "nuxt-feedback-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "postinstall": "pnpm --filter @minch/nuxt-feedback run build:stub && pnpm --filter @minch/nuxt-feedback run build:prepare && nuxt prepare"
+  },
+  "dependencies": {
+    "@minch/nuxt-feedback": "workspace:*",
+    "@vueuse/core": "catalog:shared",
+    "nuxt": "catalog:shared"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "catalog:shared"
+  }
+}

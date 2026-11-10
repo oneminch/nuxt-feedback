@@ -1,83 +1,21 @@
 {
-  "name": "@minch/nuxt-feedback",
-  "version": "0.7.0",
-  "description": "Easily integrate a feedback widget into your Nuxt app.",
-  "repository": "github:oneminch/nuxt-feedback",
-  "homepage": "https://github.com/oneminch/nuxt-feedback/#readme",
-  "license": "MIT",
-  "author": {
-    "name": "Dawit",
-    "url": "https://bsky.app/profile/minch.dev"
-  },
-  "type": "module",
-  "keywords": [
-    "nuxt",
-    "feedback",
-    "nuxt-module",
-    "feedback-widget"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/types.d.mts",
-      "import": "./dist/module.mjs"
-    },
-    "./runtime/*": "./dist/runtime/*"
-  },
-  "main": "./dist/module.mjs",
-  "typesVersions": {
-    "*": {
-      ".": [
-        "./dist/types.d.mts"
-      ]
-    }
-  },
-  "files": [
-    "dist"
-  ],
+  "name": "nuxt-feedback-workspace",
+  "private": true,
   "scripts": {
-    "prepack": "nuxt-module-build build",
-    "postinstall": "nuxt prepare",
-    "dev": "nuxt dev playground",
-    "dev:build": "nuxt build playground",
-    "dev:preview": "nuxt preview playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground",
-    "release": "pnpm run prepack && pnpm publish && git push --follow-tags",
-    "lint": "eslint .",
-    "test": "vitest run",
-    "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "docs": "pnpm --filter nuxt-feedback-docs dev",
+    "docs:build": "pnpm --filter nuxt-feedback-docs build",
+    "dev": "pnpm run docs",
+    "build": "pnpm --filter @minch/nuxt-feedback prepack",
+    "lint": "eslint --cache .",
+    "release": "pnpm --filter @minch/nuxt-feedback release",
+    "test": "pnpm --filter @minch/nuxt-feedback test",
+    "test:types": "pnpm --filter @minch/nuxt-feedback exec vue-tsc --noEmit && pnpm --filter nuxt-feedback-docs exec vue-tsc --noEmit"
   },
-  "dependencies": {
-    "@lucide/vue": "^1.68.0",
-    "@nuxt/kit": "^4.6.4",
-    "@tailwindcss/vite": "^4.3.4",
-    "@vueuse/core": "^13.9.0",
-    "class-variance-authority": "^0.7.1",
-    "cn": "^0.5.2",
-    "defu": "^6.1.7",
-    "isomorphic-dompurify": "^2.36.0",
-    "reka-ui": "^2.11.0",
-    "resend": "^6.37.0",
-    "tailwindcss": "^4.3.4",
-    "tw-animate-css": "^1.4.0"
-  },
+  "packageManager": "pnpm@12.15.0",
   "devDependencies": {
-    "@nuxt/eslint": "1.15.2",
-    "@nuxt/eslint-config": "^1.17.0",
-    "@nuxt/module-builder": "^1.0.3",
-    "@nuxt/schema": "^4.6.4",
-    "@nuxt/test-utils": "^3.23.0",
-    "@types/node": "latest",
-    "changelogen": "^0.6.2",
-    "eslint": "^9.39.5",
-    "nuxt": "^4.6.4",
-    "typescript": "~5.9.3",
-    "vitest": "^3.2.7",
-    "vue-tsc": "^2.2.12"
-  },
-  "packageManager": "pnpm@12.15.0"
+    "@nuxt/eslint-config": "catalog:shared",
+    "eslint": "catalog:shared",
+    "typescript": "catalog:shared",
+    "vue-tsc": "catalog:shared"
+  }
 }

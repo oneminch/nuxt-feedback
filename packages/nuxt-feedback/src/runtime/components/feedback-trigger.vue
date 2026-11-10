@@ -88,7 +88,7 @@ onUnmounted(unregisterWidget);
     border-radius: 0.375rem;
     background-color: var(--background);
     color: var(--foreground);
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1.25rem;
     white-space: nowrap;

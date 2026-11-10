@@ -46,7 +46,7 @@ useSeoMeta({
 
     <FeedbackWidget
       aria-label="Share Feedback"
-      trigger-label="💚"
+      trigger-label="💬"
       trigger-class="btn--icon btn--fixed"
       :with-topics="false"
     />
@@ -66,7 +66,7 @@ useSeoMeta({
   position: absolute;
   inset: 0;
   padding: 1rem 2rem;
-  background-color: rgb(245, 245, 245);
+  background-color: oklch(98.4% 0.003 247.86);
 }
 
 .container {
@@ -103,11 +103,12 @@ h1 span {
   box-sizing: border-box;
   background-color: #fff;
   color: #262626;
-  border: 1px solid #ddd;
+  border: 1px solid oklch(92.5% 0.005 214.3);
   box-shadow: none;
+  font-size: 1rem;
   &:hover {
     @media (hover: hover) {
-      background-color: #eee;
+      background-color: oklch(96.3% 0.002 197.1);
     }
   }
 }
@@ -144,7 +145,7 @@ h1 span {
   bottom: 2.5rem;
   &:hover {
     @media (hover: hover) {
-      background-color: #eee;
+      background-color: oklch(96.3% 0.002 197.1);
     }
   }
 }

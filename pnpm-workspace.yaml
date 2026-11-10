@@ -10,7 +10,7 @@ allowBuilds:
 
 catalogs:
   shared:
-    '@nuxt/eslint': ^1.15.2
+    '@nuxt/eslint': ^1.17.0
     '@nuxt/eslint-config': ^1.17.0
     '@vueuse/core': ^13.9.0
     eslint: ^10.14.0

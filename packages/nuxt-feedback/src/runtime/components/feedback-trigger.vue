@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {
   nextTick,
-  onMounted,
-  onUnmounted,
   ref,
   watch,
   watchEffect,
@@ -18,8 +16,7 @@ const props = withDefaults(defineProps<FeedbackUIProps>(), {
   withTopics: true,
 });
 
-const { isOpen, openWidget, registerWidget, unregisterWidget } =
-  useFeedbackWidget();
+const { isOpen, openWidget } = useFeedbackWidget();
 const config = useFeedbackConfig();
 const trigger = ref<HTMLButtonElement>();
 let openedByThis = false;
@@ -44,9 +41,6 @@ watch(isOpen, (value) => {
   openedByThis = false;
   nextTick(() => trigger.value?.focus());
 });
-
-onMounted(registerWidget);
-onUnmounted(unregisterWidget);
 </script>
 
 <template>

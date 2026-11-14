@@ -267,7 +267,7 @@ function handleButtonClick() {
 
 > **Note**
 >
-> You still need to add the `<FeedbackWidget />` component to your app somewhere. If you would like to hide the default trigger and programmatically toggle the widget using your means, you can hide it using CSS, e.g. `trigger-class="hidden"`.
+> The modal is mounted automatically by the module, so `useFeedbackWidget()` works without adding `<FeedbackWidget />` to a template. Add `<FeedbackWidget />` only if you want its default trigger button; you can hide that button with CSS, e.g. `trigger-class="hidden"`.
 
 #### Composable API
 
@@ -276,11 +276,6 @@ interface UseFeedbackWidget {
   isOpen: Ref<boolean, boolean>; // Current widget state
   openWidget: () => void; // Open the widget
   closeWidget: () => void; // Close the widget
-
-  // For Internal Use
-  isWidgetMounted: Readonly<Ref<boolean, boolean>>;
-  registerWidget: () => void;
-  unregisterWidget: () => void;
 }
 ```
 
@@ -522,7 +517,6 @@ async function handleTaskComplete() {
 A list of issues I have noticed and I'm working on a fix for:
 
 - The widget doesn't currently work on fully static sites such as ones deployed to GitHub Pages as it requires a server for submitting feedback.
-- The `useFeedbackWidget` composable doesn't detect the `<FeedbackWidget />` component properly.
 
 ## Troubleshooting
 

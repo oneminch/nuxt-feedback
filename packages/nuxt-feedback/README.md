@@ -516,7 +516,7 @@ async function handleTaskComplete() {
 
 A list of issues I have noticed and I'm working on a fix for:
 
-- The widget doesn't currently work on fully static sites such as ones deployed to GitHub Pages as it requires a server for submitting feedback.
+- On fully static sites (for example GitHub Pages), the module auto-detects no server, disables the trigger, and blocks feedback submissions.
 
 ## Troubleshooting
 

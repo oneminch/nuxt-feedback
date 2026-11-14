@@ -6,7 +6,7 @@ import FeedbackStatus from "../src/runtime/components/feedback-status.vue";
 import FeedbackForm from "../src/runtime/components/feedback-form.vue";
 import useFeedbackWidget from "../src/runtime/composables/use-feedback-widget";
 import useFeedbackConfig from "../src/runtime/composables/use-feedback-config";
-import { resetState } from "./mocks/imports";
+import { resetState, useRuntimeConfig } from "./mocks/imports";
 
 const fetchMock = vi.fn();
 vi.stubGlobal("$fetch", fetchMock);
@@ -14,6 +14,7 @@ vi.stubGlobal("$fetch", fetchMock);
 beforeEach(() => {
   resetState();
   vi.clearAllMocks();
+  vi.mocked(useRuntimeConfig).mockReturnValue({});
 });
 
 describe("FeedbackTrigger", () => {
@@ -48,6 +49,17 @@ describe("FeedbackTrigger", () => {
     expect(cfg).toMatchObject({ title: "T", topics: ["a"], withTopics: true });
     expect(cfg).not.toHaveProperty("triggerLabel");
     expect(cfg).not.toHaveProperty("description");
+  });
+
+  it("disables the trigger when no server is available", async () => {
+    vi.mocked(useRuntimeConfig).mockReturnValue({
+      public: { feedbackWidget: { serverAvailable: false } },
+    });
+    const widget = useFeedbackWidget();
+    const w = mount(FeedbackTrigger);
+    expect(w.get("button").attributes("disabled")).toBeDefined();
+    await w.get("button").trigger("click");
+    expect(widget.isOpen.value).toBe(false);
   });
 });
 

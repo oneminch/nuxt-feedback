@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import {
+  computed,
   nextTick,
   ref,
+  useRuntimeConfig,
   watch,
   watchEffect,
 } from "#imports";
@@ -18,6 +20,14 @@ const props = withDefaults(defineProps<FeedbackUIProps>(), {
 
 const { isOpen, openWidget } = useFeedbackWidget();
 const config = useFeedbackConfig();
+const runtimeConfig = useRuntimeConfig() as
+  | {
+      public?: { feedbackWidget?: { serverAvailable?: boolean } };
+    }
+  | undefined;
+const serverAvailable = computed(
+  () => runtimeConfig?.public?.feedbackWidget?.serverAvailable !== false,
+);
 const trigger = ref<HTMLButtonElement>();
 let openedByThis = false;
 
@@ -31,6 +41,7 @@ watchEffect(() => {
 });
 
 const open = () => {
+  if (!serverAvailable.value) return;
   openedByThis = true;
   openWidget();
 };
@@ -49,6 +60,7 @@ watch(isOpen, (value) => {
     type="button"
     class="feedback-trigger"
     :class="triggerClass"
+    :disabled="!serverAvailable"
     aria-haspopup="dialog"
     :aria-expanded="isOpen"
     @click="open"

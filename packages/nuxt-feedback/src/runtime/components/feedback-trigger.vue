@@ -67,13 +67,13 @@ onUnmounted(unregisterWidget);
 /* Zero specificity so any consumer styles override these defaults. */
 @layer base {
   :where(.feedback-trigger) {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
+    --nfw-trigger-background: oklch(1 0 0);
+    --nfw-trigger-foreground: oklch(0.145 0 0);
+    --nfw-trigger-accent: oklch(0.97 0 0);
+    --nfw-trigger-accent-foreground: oklch(0.205 0 0);
+    --nfw-trigger-destructive: oklch(0.577 0.245 27.325);
+    --nfw-trigger-border: oklch(0.922 0 0);
+    --nfw-trigger-ring: oklch(0.708 0 0);
 
     box-sizing: border-box;
     display: inline-flex;
@@ -84,10 +84,10 @@ onUnmounted(unregisterWidget);
     height: 2.25rem;
     padding-block: 0.5rem;
     padding-inline: 1rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--nfw-trigger-border);
     border-radius: 0.375rem;
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: var(--nfw-trigger-background);
+    color: var(--nfw-trigger-foreground);
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.25rem;
@@ -100,15 +100,15 @@ onUnmounted(unregisterWidget);
 
   @media (hover: hover) {
     :where(.feedback-trigger:hover) {
-      background-color: var(--accent);
-      color: var(--accent-foreground);
+      background-color: var(--nfw-trigger-accent);
+      color: var(--nfw-trigger-accent-foreground);
     }
   }
 
   :where(.feedback-trigger:focus-visible) {
-    border-color: var(--ring);
+    border-color: var(--nfw-trigger-ring);
     box-shadow:
-      0 0 0 3px mix(in oklab, var(--ring) 50%, transparent),
+      0 0 0 3px mix(in oklab, var(--nfw-trigger-ring) 50%, transparent),
       0 1px 2px 0 rgb(0 0 0 / 5%);
   }
 
@@ -122,12 +122,12 @@ onUnmounted(unregisterWidget);
   }
 
   :where(.feedback-trigger[aria-invalid="true"]) {
-    border-color: var(--destructive);
+    border-color: var(--nfw-trigger-destructive);
   }
 
   :where(.feedback-trigger[aria-invalid="true"]:focus-visible) {
     box-shadow:
-      0 0 0 3px mix(in oklab, var(--destructive) 20%, transparent),
+      0 0 0 3px mix(in oklab, var(--nfw-trigger-destructive) 20%, transparent),
       0 1px 2px 0 rgb(0 0 0 / 5%);
   }
 

@@ -12,4 +12,12 @@ describe('ssr', async () => {
     const html = await $fetch('/')
     expect(html).toContain('<div>basic</div>')
   })
+
+  it('falls back to the error handler when no method is configured', async () => {
+    const res = await $fetch<{ status: string }>('/api/submit-feedback', {
+      method: 'POST',
+      body: {},
+    })
+    expect(res.status).toBe('failure')
+  })
 })

@@ -204,6 +204,43 @@ interface FeedbackUIProps {
 | `withTopics`   | `boolean`  | `true`                                                  | Whether to show the topics selector           |
 | `topics`       | `string[]` | `["General Feedback", "Bug Report", "Feature Request"]` | Array of available feedback topics            |
 
+#### Style Overrides with CSS Variables
+
+The widget supports style overrides through namespaced CSS variables.
+
+- Use `--nfw-*` variables to customize the modal UI rendered inside the `nuxt-feedback-widget` custom element.
+- Use `--nfw-trigger-*` variables to customize the default trigger button styles.
+
+```css
+/* Modal styles (inside the custom element shadow root) */
+nuxt-feedback-widget {
+  --nfw-primary: oklch(64.5% 0.246 16.439);
+  --nfw-primary-foreground: oklch(97.1% 0.013 17.38);
+  --nfw-ring: oklch(64.5% 0.246 16.439);
+  --nfw-radius: 0.75rem;
+  --nfw-radio-checked-border: oklch(64.5% 0.246 16.439);
+  --nfw-radio-checked-background: oklch(97.1% 0.013 17.38);
+}
+
+/* Dark mode overrides for the modal */
+.dark nuxt-feedback-widget {
+  --nfw-primary: oklch(76.9% 0.188 70.08);
+  --nfw-primary-foreground: oklch(26.6% 0.079 36.259);
+  --nfw-ring: oklch(76.9% 0.188 70.08);
+  --nfw-radio-checked-border: oklch(76.9% 0.188 70.08);
+  --nfw-radio-checked-background: oklch(39.4% 0.095 152.535);
+}
+
+/* Default trigger button styles */
+button.feedback-trigger {
+  --nfw-trigger-background: oklch(98.5% 0.001 106.423);
+  --nfw-trigger-foreground: oklch(27.4% 0.006 286.033);
+  --nfw-trigger-accent: oklch(96.7% 0.001 286.375);
+  --nfw-trigger-accent-foreground: oklch(21% 0.006 285.885);
+  --nfw-trigger-ring: oklch(64.5% 0.246 16.439);
+}
+```
+
 ### Using the Composable
 
 Control the widget programmatically using the `useFeedbackWidget` composable:

@@ -1,0 +1,40 @@
+name: Nuxt Module CI
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version to use'
+        required: false
+        type: string
+        default: '24'
+      prepare-script:
+        description: 'Script to prepare Nuxt types'
+        required: false
+        type: string
+        default: 'pnpm run dev:prepare'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@v3
+        with:
+          runtime: node@${{ inputs.node-version }}
+          cache: true
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Prepare Docs/Playground
+        run: ${{ inputs.prepare-script }}
+
+      - name: Test
+        run: pnpm run test

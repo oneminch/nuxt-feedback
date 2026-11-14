@@ -6,7 +6,8 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "generate": "nuxt generate",
-    "postinstall": "pnpm --filter @minch/nuxt-feedback run build:stub && pnpm --filter @minch/nuxt-feedback run build:prepare && nuxt prepare"
+    "prepare": "pnpm --filter @minch/nuxt-feedback run build:stub && pnpm --filter @minch/nuxt-feedback run build:prepare && nuxt prepare",
+    "postinstall": "pnpm run prepare"
   },
   "dependencies": {
     "@minch/nuxt-feedback": "workspace:*",

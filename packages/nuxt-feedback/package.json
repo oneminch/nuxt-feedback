@@ -65,13 +65,13 @@
     "@nuxt/eslint": "catalog:shared",
     "@nuxt/module-builder": "catalog:package",
     "@nuxt/schema": "catalog:package",
-    "@nuxt/test-utils": "catalog:package",
+    "@nuxt/test-utils": "catalog:test",
     "@types/node": "catalog:package",
-    "@vitejs/plugin-vue": "^6.0.11",
-    "@vue/test-utils": "^2.5.1",
+    "@vitejs/plugin-vue": "catalog:test",
+    "@vue/test-utils": "catalog:test",
     "changelogen": "catalog:package",
-    "jsdom": "^31.0.1",
+    "jsdom": "catalog:test",
     "nuxt": "catalog:shared",
-    "vitest": "catalog:package"
+    "vitest": "catalog:test"
   }
 }

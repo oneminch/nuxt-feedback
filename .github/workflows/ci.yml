@@ -1,4 +1,4 @@
-name: ci
+name: CI
 
 on:
   push:
@@ -13,6 +13,6 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    uses: ./.github/workflows/module-ci.yml
+    uses: oneminch/workflows/.github/workflows/module-ci.yml@v1
     with:
       prepare-script: pnpm run docs:prepare

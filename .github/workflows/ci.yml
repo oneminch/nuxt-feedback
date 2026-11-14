@@ -14,6 +14,6 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    uses: oneminch/workflows/.github/workflows/module-ci.yml@v1
+    uses: oneminch/workflows/.github/workflows/nuxt-module-ci.yml@v1
     with:
       prepare-script: pnpm run docs:prepare

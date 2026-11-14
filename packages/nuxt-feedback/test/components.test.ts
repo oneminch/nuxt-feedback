@@ -31,14 +31,6 @@ describe("FeedbackTrigger", () => {
     expect(w.get("button").classes()).toContain("custom");
   });
 
-  it("registers on mount and unregisters on unmount", () => {
-    const widget = useFeedbackWidget();
-    const w = mount(FeedbackTrigger);
-    expect(widget.isWidgetMounted.value).toBe(true);
-    w.unmount();
-    expect(widget.isWidgetMounted.value).toBe(false);
-  });
-
   it("opens the widget on click", async () => {
     const widget = useFeedbackWidget();
     const w = mount(FeedbackTrigger);

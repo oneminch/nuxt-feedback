@@ -52,9 +52,6 @@ export interface UseFeedbackWidget {
   isOpen: Ref<boolean, boolean>;
   closeWidget: () => void;
   openWidget: () => void;
-  isWidgetMounted: Readonly<Ref<boolean, boolean>>;
-  registerWidget: () => void;
-  unregisterWidget: () => void;
 }
 
 export type SubmissionStatus = "success" | "failure";

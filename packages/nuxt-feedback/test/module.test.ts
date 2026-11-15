@@ -52,7 +52,6 @@ describe("module", () => {
 
     expect(mocks.addServerHandler).not.toHaveBeenCalled();
     expect(mocks.warn).toHaveBeenCalledWith(expect.stringContaining("No server detected"));
-    expect(nuxt.options.runtimeConfig.public.feedbackWidget.serverAvailable).toBe(false);
     expect(nuxt.options.runtimeConfig.public.feedbackWidget.widgetEnabled).toBe(false);
   });
 
@@ -69,7 +68,6 @@ describe("module", () => {
         handler: expect.stringContaining("custom-endpoint"),
       }),
     );
-    expect(nuxt.options.runtimeConfig.public.feedbackWidget.serverAvailable).toBe(true);
     expect(nuxt.options.runtimeConfig.public.feedbackWidget.widgetEnabled).toBe(true);
   });
 
@@ -80,7 +78,6 @@ describe("module", () => {
     await feedbackModule.setup({ method: "custom-endpoint" } as ModuleOptions, nuxt as any);
 
     expect(mocks.addServerHandler).not.toHaveBeenCalled();
-    expect(nuxt.options.runtimeConfig.public.feedbackWidget.serverAvailable).toBe(false);
     expect(nuxt.options.runtimeConfig.public.feedbackWidget.widgetEnabled).toBe(false);
   });
 });

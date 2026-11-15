@@ -5,7 +5,6 @@ type FeedbackWidgetRuntimeConfig =
       public?: {
         feedbackWidget?: {
           widgetEnabled?: boolean;
-          serverAvailable?: boolean;
         };
       };
     }
@@ -19,10 +18,6 @@ const useFeedbackAvailability = () => {
 
     if (config?.widgetEnabled !== undefined) {
       return config.widgetEnabled;
-    }
-
-    if (config?.serverAvailable !== undefined) {
-      return config.serverAvailable;
     }
 
     return true;

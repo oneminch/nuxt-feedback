@@ -90,7 +90,6 @@ export default defineNuxtModule<ModuleOptions>({
       {
         siteName: options.siteName,
         customEndpoint: options.customEndpoint,
-        serverAvailable: hasServer,
         widgetEnabled: hasServer,
       }
     );

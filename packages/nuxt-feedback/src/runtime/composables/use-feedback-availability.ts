@@ -1,17 +1,8 @@
 import { computed, useRuntimeConfig } from "#imports";
-
-type FeedbackWidgetRuntimeConfig =
-  | {
-      public?: {
-        feedbackWidget?: {
-          widgetEnabled?: boolean;
-        };
-      };
-    }
-  | undefined;
+import type { FeedbackWidgetRuntimeConfig } from '../types';
 
 const useFeedbackAvailability = () => {
-  const runtimeConfig = useRuntimeConfig() as FeedbackWidgetRuntimeConfig;
+  const runtimeConfig = useRuntimeConfig() as FeedbackWidgetRuntimeConfig | undefined;
 
   const isWidgetEnabled = computed(() => {
     const config = runtimeConfig?.public?.feedbackWidget;

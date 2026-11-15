@@ -54,4 +54,12 @@ export interface UseFeedbackWidget {
   openWidget: () => void;
 }
 
+export interface FeedbackWidgetRuntimeConfig {
+  public?: {
+    feedbackWidget?: {
+      widgetEnabled?: boolean;
+    };
+  };
+}
+
 export type SubmissionStatus = "success" | "failure";

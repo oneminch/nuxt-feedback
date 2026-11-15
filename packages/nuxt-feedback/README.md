@@ -268,6 +268,7 @@ function handleButtonClick() {
 > **Note**
 >
 > The modal is mounted automatically by the module, so `useFeedbackWidget()` works without adding `<FeedbackWidget />` to a template. Add `<FeedbackWidget />` only if you want its default trigger button; you can hide that button with CSS, e.g. `trigger-class="hidden"`.
+> In static/no-server deployments (for example `nuxt generate` or static output presets like `github-pages`), `openWidget()` is intentionally a no-op and the default trigger is disabled.
 
 #### Composable API
 

@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import {
-  computed,
-  nextTick,
-  ref,
-  useRuntimeConfig,
-  watch,
-  watchEffect,
-} from "#imports";
+import { nextTick, ref, watch, watchEffect } from "#imports";
 import type { FeedbackUIProps } from "../types";
 import useFeedbackWidget from "#nuxt-feedback/composables/use-feedback-widget";
 import useFeedbackConfig from "#nuxt-feedback/composables/use-feedback-config";
+import useFeedbackAvailability from "#nuxt-feedback/composables/use-feedback-availability";
 
 const props = withDefaults(defineProps<FeedbackUIProps>(), {
   triggerLabel: "Share Feedback",
@@ -19,15 +13,8 @@ const props = withDefaults(defineProps<FeedbackUIProps>(), {
 });
 
 const { isOpen, openWidget } = useFeedbackWidget();
+const { isWidgetEnabled } = useFeedbackAvailability();
 const config = useFeedbackConfig();
-const runtimeConfig = useRuntimeConfig() as
-  | {
-      public?: { feedbackWidget?: { serverAvailable?: boolean } };
-    }
-  | undefined;
-const serverAvailable = computed(
-  () => runtimeConfig?.public?.feedbackWidget?.serverAvailable !== false,
-);
 const trigger = ref<HTMLButtonElement>();
 let openedByThis = false;
 
@@ -41,7 +28,7 @@ watchEffect(() => {
 });
 
 const open = () => {
-  if (!serverAvailable.value) return;
+  if (!isWidgetEnabled.value) return;
   openedByThis = true;
   openWidget();
 };
@@ -60,7 +47,7 @@ watch(isOpen, (value) => {
     type="button"
     class="feedback-trigger"
     :class="triggerClass"
-    :disabled="!serverAvailable"
+    :disabled="!isWidgetEnabled"
     aria-haspopup="dialog"
     :aria-expanded="isOpen"
     @click="open"

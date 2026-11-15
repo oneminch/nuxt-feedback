@@ -4,6 +4,7 @@ import { defineNuxtPlugin } from "#imports";
 import FeedbackWidget from "#nuxt-feedback/components/feedback-widget.vue";
 import { FEEDBACK_WIDGET_TAG } from "#nuxt-feedback/utils";
 import widgetCss from "../assets/css/tailwind.css?inline";
+import useFeedbackAvailability from "#nuxt-feedback/composables/use-feedback-availability";
 
 /**
  * `@property` rules are ignored inside shadow roots, but Tailwind relies on
@@ -22,6 +23,9 @@ const registerCssProperties = (css: string) => {
 const DARK_MODE_TARGETS = () => [document.documentElement, document.body];
 
 export default defineNuxtPlugin((nuxtApp) => {
+  const { isWidgetEnabled } = useFeedbackAvailability();
+  if (!isWidgetEnabled.value) return;
+
   if (customElements.get(FEEDBACK_WIDGET_TAG)) return;
 
   const BaseElement = defineCustomElement(FeedbackWidget, {

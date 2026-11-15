@@ -1,11 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import useFeedbackWidget from "../src/runtime/composables/use-feedback-widget";
 import useFeedbackConfig from "../src/runtime/composables/use-feedback-config";
-import { resetState } from "./mocks/imports";
+import { resetState, useRuntimeConfig } from "./mocks/imports";
 
 beforeEach(() => {
   resetState();
   vi.restoreAllMocks();
+  vi.mocked(useRuntimeConfig).mockReturnValue({});
 });
 
 describe("useFeedbackWidget", () => {
@@ -29,6 +30,17 @@ describe("useFeedbackWidget", () => {
     const b = useFeedbackWidget();
     a.openWidget();
     expect(b.isOpen.value).toBe(true);
+  });
+
+  it("does not open when widget is disabled in runtime config", () => {
+    vi.mocked(useRuntimeConfig).mockReturnValue({
+      public: { feedbackWidget: { widgetEnabled: false } },
+    });
+
+    const w = useFeedbackWidget();
+    w.openWidget();
+
+    expect(w.isOpen.value).toBe(false);
   });
 });
 

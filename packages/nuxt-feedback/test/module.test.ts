@@ -25,7 +25,7 @@ vi.mock("@nuxt/kit", () => ({
 type NuxtLike = {
   options: {
     alias: Record<string, string>;
-    nitro?: { static?: boolean };
+    nitro?: { static?: boolean; preset?: string };
     runtimeConfig: { public: Record<string, any> };
     _generate?: boolean;
   };
@@ -53,6 +53,7 @@ describe("module", () => {
     expect(mocks.addServerHandler).not.toHaveBeenCalled();
     expect(mocks.warn).toHaveBeenCalledWith(expect.stringContaining("No server detected"));
     expect(nuxt.options.runtimeConfig.public.feedbackWidget.serverAvailable).toBe(false);
+    expect(nuxt.options.runtimeConfig.public.feedbackWidget.widgetEnabled).toBe(false);
   });
 
   it("registers the submission route when a server is available", async () => {
@@ -69,5 +70,17 @@ describe("module", () => {
       }),
     );
     expect(nuxt.options.runtimeConfig.public.feedbackWidget.serverAvailable).toBe(true);
+    expect(nuxt.options.runtimeConfig.public.feedbackWidget.widgetEnabled).toBe(true);
+  });
+
+  it("treats github-pages preset builds as no-server deployments", async () => {
+    const nuxt = createNuxt();
+    nuxt.options.nitro = { preset: "github-pages" };
+
+    await feedbackModule.setup({ method: "custom-endpoint" } as ModuleOptions, nuxt as any);
+
+    expect(mocks.addServerHandler).not.toHaveBeenCalled();
+    expect(nuxt.options.runtimeConfig.public.feedbackWidget.serverAvailable).toBe(false);
+    expect(nuxt.options.runtimeConfig.public.feedbackWidget.widgetEnabled).toBe(false);
   });
 });

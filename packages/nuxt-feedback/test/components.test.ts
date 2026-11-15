@@ -53,7 +53,7 @@ describe("FeedbackTrigger", () => {
 
   it("disables the trigger when no server is available", async () => {
     vi.mocked(useRuntimeConfig).mockReturnValue({
-      public: { feedbackWidget: { serverAvailable: false } },
+      public: { feedbackWidget: { widgetEnabled: false } },
     });
     const widget = useFeedbackWidget();
     const w = mount(FeedbackTrigger);

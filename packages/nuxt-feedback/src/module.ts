@@ -33,14 +33,19 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
     const logger = useLogger(name);
+    const isStaticPreset = (() => {
+      const preset = nuxt.options.nitro?.preset;
+      return typeof preset === "string" &&
+        (preset === "github-pages" || preset.includes("static"));
+    })();
     const hasServer =
-      !nuxt.options.nitro?.static && !(nuxt.options as any)._generate;
+      !nuxt.options.nitro?.static && !(nuxt.options as any)._generate && !isStaticPreset;
 
     nuxt.options.alias["#nuxt-feedback"] = resolver.resolve("./runtime");
 
     if (!hasServer) {
       logger.warn(
-        "[Feedback Widget]: No server detected (`nuxt generate` / static mode). The widget trigger is disabled and feedback submissions are blocked.",
+        "[Feedback Widget]: No server detected (`nuxt generate` / static output preset). The widget trigger is disabled and feedback submissions are blocked.",
       );
     }
 
@@ -85,7 +90,7 @@ export default defineNuxtModule<ModuleOptions>({
       {
         siteName: options.siteName,
         customEndpoint: options.customEndpoint,
-        serverAvailable: hasServer,
+        widgetEnabled: hasServer,
       }
     );
   },

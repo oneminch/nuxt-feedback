@@ -108,6 +108,7 @@ watch(isOpen, (value) => {
   :where(.feedback-trigger:disabled) {
     pointer-events: none;
     opacity: 0.5;
+    cursor: not-allowed;
   }
 
   :where(.feedback-trigger:has(> svg)) {

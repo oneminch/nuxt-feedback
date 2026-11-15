@@ -4,6 +4,7 @@
   "scripts": {
     "docs": "pnpm --filter nuxt-feedback-docs dev",
     "docs:build": "pnpm --filter nuxt-feedback-docs build",
+    "docs:generate": "pnpm --filter nuxt-feedback-docs generate",
     "docs:prepare": "pnpm --filter nuxt-feedback-docs prepare",
     "dev": "pnpm run docs",
     "build": "pnpm --filter @minch/nuxt-feedback prepack",

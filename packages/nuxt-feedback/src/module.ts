@@ -33,18 +33,16 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
     const logger = useLogger(name);
+    const hasServer =
+      !nuxt.options.nitro?.static && !(nuxt.options as any)._generate;
 
     nuxt.options.alias["#nuxt-feedback"] = resolver.resolve("./runtime");
 
-    // Check nitro.options.static in the nitro:init hook
-
-    // const isSSG = !!nuxt.options.nitro?.prerender || nuxt.options.nitro.static;
-
-    // if (isSSG) {
-    //   logger.warn(
-    //     "[Feedback Widget]: The feedback widget requires a server to work properly.",
-    //   );
-    // }
+    if (!hasServer) {
+      logger.warn(
+        "[Feedback Widget]: No server detected (`nuxt generate` / static mode). The widget trigger is disabled and feedback submissions are blocked.",
+      );
+    }
 
     let handler: string;
 
@@ -71,11 +69,13 @@ export default defineNuxtModule<ModuleOptions>({
 
     addPlugin(resolver.resolve("./runtime/plugins/feedback-widget.client"));
 
-    addServerHandler({
-      route: "/api/submit-feedback",
-      handler,
-      method: "post",
-    });
+    if (hasServer) {
+      addServerHandler({
+        route: "/api/submit-feedback",
+        handler,
+        method: "post",
+      });
+    }
 
     const moduleRuntimeConfig: any =
       nuxt.options.runtimeConfig.public.feedbackWidget;
@@ -85,6 +85,7 @@ export default defineNuxtModule<ModuleOptions>({
       {
         siteName: options.siteName,
         customEndpoint: options.customEndpoint,
+        serverAvailable: hasServer,
       }
     );
   },

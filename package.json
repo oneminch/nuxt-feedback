@@ -13,7 +13,7 @@
     "test": "pnpm --filter @minch/nuxt-feedback test",
     "test:types": "pnpm --filter @minch/nuxt-feedback exec vue-tsc --noEmit && pnpm --filter nuxt-feedback-docs exec vue-tsc --noEmit"
   },
-  "packageManager": "pnpm@12.15.0",
+  "packageManager": "pnpm@12.21.0",
   "devDependencies": {
     "@nuxt/eslint-config": "catalog:shared",
     "eslint": "catalog:shared",

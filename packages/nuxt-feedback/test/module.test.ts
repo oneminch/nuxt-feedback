@@ -48,7 +48,7 @@ describe("module", () => {
     const nuxt = createNuxt();
     nuxt.options.nitro = { static: true };
 
-    await feedbackModule({ method: "custom-endpoint" } as ModuleOptions, nuxt as any);
+    await feedbackModule.setup({ method: "custom-endpoint" } as ModuleOptions, nuxt as any);
 
     expect(mocks.addServerHandler).not.toHaveBeenCalled();
     expect(mocks.warn).toHaveBeenCalledWith(expect.stringContaining("No server detected"));
@@ -58,7 +58,7 @@ describe("module", () => {
   it("registers the submission route when a server is available", async () => {
     const nuxt = createNuxt();
 
-    await feedbackModule({ method: "custom-endpoint" } as ModuleOptions, nuxt as any);
+    await feedbackModule.setup({ method: "custom-endpoint" } as ModuleOptions, nuxt as any);
 
     expect(mocks.addServerHandler).toHaveBeenCalledOnce();
     expect(mocks.addServerHandler).toHaveBeenCalledWith(
@@ -75,7 +75,7 @@ describe("module", () => {
     const nuxt = createNuxt();
     nuxt.options.nitro = { preset: "github-pages" };
 
-    await feedbackModule({ method: "custom-endpoint" } as ModuleOptions, nuxt as any);
+    await feedbackModule.setup({ method: "custom-endpoint" } as ModuleOptions, nuxt as any);
 
     expect(mocks.addServerHandler).not.toHaveBeenCalled();
     expect(nuxt.options.runtimeConfig.public.feedbackWidget.widgetEnabled).toBe(false);

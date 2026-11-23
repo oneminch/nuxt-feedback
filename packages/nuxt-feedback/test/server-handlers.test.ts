@@ -1,6 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { readBody, useRuntimeConfig } from "./mocks/imports";
 
+vi.mock("h3", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("h3")>()),
+  readBody,
+}));
+
 const sendMock = vi.fn();
 vi.mock("resend", () => ({
   Resend: class {
@@ -45,7 +50,7 @@ const baseConfig = {
 
 beforeEach(() => {
   vi.clearAllMocks();
-  vi.spyOn(console, "error").mockImplementation(() => {});
+  vi.spyOn(console, "error").mockImplementation(() => { });
   vi.mocked(useRuntimeConfig).mockReturnValue(structuredClone(baseConfig));
   vi.mocked(readBody).mockResolvedValue(structuredClone(body));
 });

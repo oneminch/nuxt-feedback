@@ -73,14 +73,14 @@ watch(isOpen, (newValue: boolean) => {
       :is="Modal.Content"
       class="sm:max-w-sm px-2 *:px-4 text-zinc-900 dark:text-zinc-50"
     >
-      <template v-if="!isFeedbackSubmitted">
-        <component :is="Modal.Header">
-          <component :is="Modal.Title">{{ options.title }}</component>
-          <component :is="Modal.Description">
-            {{ options.description }}
-          </component>
+      <component :is="Modal.Header" :class="{ 'sr-only': isFeedbackSubmitted }">
+        <component :is="Modal.Title">{{ options.title }}</component>
+        <component :is="Modal.Description">
+          {{ options.description }}
         </component>
+      </component>
 
+      <template v-if="!isFeedbackSubmitted">
         <FeedbackForm
           :submit-label="options.submitLabel"
           :with-topics="options.withTopics"

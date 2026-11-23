@@ -1,9 +1,11 @@
 import {
   createError,
-  defineEventHandler,
-  readBody,
   useRuntimeConfig,
 } from "#imports";
+import {
+  defineEventHandler,
+  readBody,
+} from "h3";
 import { logger } from "#nuxt-feedback/utils";
 import type { FeedbackData } from "../../../types";
 
@@ -15,7 +17,7 @@ export default defineEventHandler(async (event) => {
   } = useRuntimeConfig();
 
   try {
-    const endpoint = customEndpoint.trim();
+    const endpoint = (customEndpoint || '').trim();
 
     // Validate environment variables
     if (!endpoint) {
@@ -50,7 +52,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Send data to custom endpoint
-    await $fetch(customEndpoint, {
+    await $fetch(endpoint, {
       method: "POST",
       body: { ...body, siteName },
       onResponseError: () => {
@@ -64,6 +66,7 @@ export default defineEventHandler(async (event) => {
     });
 
     return {
+      error: false,
       status: "success",
       message: "Thank you for your feedback!",
     };

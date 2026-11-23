@@ -1,9 +1,11 @@
 import {
   createError,
-  defineEventHandler,
-  readBody,
   useRuntimeConfig,
 } from "#imports";
+import {
+  defineEventHandler,
+  readBody,
+} from "h3";
 import type { FeedbackData } from "../../../types";
 import { generateFeedbackEmailHtml, logger } from "#nuxt-feedback/utils";
 import { Resend } from "resend";
@@ -64,6 +66,7 @@ export default defineEventHandler(async (event) => {
     }
 
     return {
+      error: false,
       status: "success",
       message: "Thank you for your feedback!",
     };

@@ -1,9 +1,11 @@
 import {
   createError,
-  defineEventHandler,
-  readBody,
   useRuntimeConfig,
 } from "#imports";
+import {
+  defineEventHandler,
+  readBody,
+} from "h3";
 import {
   generateFeedbackGitHubIssueMarkdown,
   logger,
@@ -73,6 +75,7 @@ export default defineEventHandler(async (event) => {
     );
 
     return {
+      error: false,
       status: "success",
       message: "Thank you for your feedback!",
     };

@@ -1,4 +1,4 @@
-import { defineEventHandler } from "#imports";
+import { defineEventHandler } from "h3";
 import { logger } from "#nuxt-feedback/utils";
 
 export default defineEventHandler(() => {

@@ -20,6 +20,24 @@ export interface ModuleOptions {
   customEndpoint?: string;
 }
 
+declare module 'nuxt/schema' {
+  interface RuntimeConfig {
+    resendApiKey: string;
+    resendFrom: string;
+    resendTo: string;
+    githubToken: string;
+    githubRepo: string;
+    githubOwner: string;
+  }
+  interface PublicRuntimeConfig {
+    feedbackWidget: {
+      siteName: string | undefined;
+      customEndpoint: string | undefined;
+      widgetEnabled: boolean
+    }
+  }
+}
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name,

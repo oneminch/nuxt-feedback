@@ -67,7 +67,7 @@ const submitFeedback = async () => {
   isSubmitting.value = true;
 
   try {
-    const res = await $fetch("/api/submit-feedback", {
+    const res = await $fetch("/api/_nuxt-feedback/submit", {
       method: "POST",
       body: feedbackData,
     });

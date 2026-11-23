@@ -30,7 +30,7 @@ const body = {
 
 type Handler = (event: unknown) => Promise<Record<string, unknown>>;
 const load = async (file: string) =>
-  (await import(`../src/runtime/server/api/feedback/${file}.ts`))
+  (await import(`../src/runtime/server/api/_nuxt-feedback/${file}.ts`))
     .default as Handler;
 
 const baseConfig = {

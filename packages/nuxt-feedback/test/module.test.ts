@@ -63,7 +63,7 @@ describe("module", () => {
     expect(mocks.addServerHandler).toHaveBeenCalledOnce();
     expect(mocks.addServerHandler).toHaveBeenCalledWith(
       expect.objectContaining({
-        route: "/api/submit-feedback",
+        route: "/api/_nuxt-feedback/submit",
         method: "post",
         handler: expect.stringContaining("custom-endpoint"),
       }),

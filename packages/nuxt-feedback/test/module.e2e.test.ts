@@ -23,8 +23,8 @@ describe('module (custom-endpoint)', async () => {
     expect(html).toContain('feedback-trigger')
   })
 
-  it('registers POST /api/submit-feedback and forwards to the endpoint', async () => {
-    const res = await $fetch<{ status: string }>('/api/submit-feedback', {
+  it('registers POST /api/_nuxt-feedback/submit and forwards to the endpoint', async () => {
+    const res = await $fetch<{ status: string }>('/api/_nuxt-feedback/submit', {
       method: 'POST',
       body: payload('Love it!'),
     })
@@ -37,7 +37,7 @@ describe('module (custom-endpoint)', async () => {
 
   it('rejects a submission without a reaction', async () => {
     const res = await $fetch<{ status: string, message: string }>(
-      '/api/submit-feedback',
+      '/api/_nuxt-feedback/submit',
       { method: 'POST', body: payload('') },
     )
     expect(res.status).toBe('failure')

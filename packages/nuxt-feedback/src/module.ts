@@ -70,11 +70,11 @@ export default defineNuxtModule<ModuleOptions>({
     let handler: string;
 
     if (METHODS.includes(options.method)) {
-      handler = resolver.resolve(`./runtime/server/api/feedback/${options.method}`);
+      handler = resolver.resolve(`./runtime/server/api/_nuxt-feedback/${options.method}`);
     } else {
       logger.warn("[Feedback Widget]: Please set a default feedback method in your config.");
 
-      handler = resolver.resolve("./runtime/server/api/feedback/error");
+      handler = resolver.resolve("./runtime/server/api/_nuxt-feedback/error");
     }
 
     await import("@tailwindcss/vite").then((r) => addVitePlugin(r.default));
@@ -94,7 +94,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     if (hasServer) {
       addServerHandler({
-        route: "/api/submit-feedback",
+        route: "/api/_nuxt-feedback/submit",
         handler,
         method: "post",
       });

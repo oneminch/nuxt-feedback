@@ -7,9 +7,9 @@ describe('module (no method configured)', async () => {
     rootDir: fileURLToPath(new URL('./fixtures/basic', import.meta.url)),
   })
 
-  it('falls back to the error handler for POST /api/submit-feedback', async () => {
+  it('falls back to the error handler for POST /api/_nuxt-feedback/submit', async () => {
     const res = await $fetch<{ error: boolean, status: string }>(
-      '/api/submit-feedback',
+      '/api/_nuxt-feedback/submit',
       { method: 'POST', body: {} },
     )
     expect(res).toMatchObject({ error: true, status: 'failure' })

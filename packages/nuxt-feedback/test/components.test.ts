@@ -106,7 +106,7 @@ describe("FeedbackForm", () => {
 
     expect(fetchMock).toHaveBeenCalledOnce();
     const [url, opts] = fetchMock.mock.calls[0]!;
-    expect(url).toBe("/api/submit-feedback");
+    expect(url).toBe("/api/_nuxt-feedback/submit");
     expect(opts.method).toBe("POST");
     expect(opts.body).toMatchObject({
       reaction: "Love it!",

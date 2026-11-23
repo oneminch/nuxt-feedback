@@ -1,5 +1,3 @@
-import { defineEventHandler, readBody } from "#imports";
-
 export default defineEventHandler(async (event) => {
   // Read and validate request body
   const body = await readBody(event);

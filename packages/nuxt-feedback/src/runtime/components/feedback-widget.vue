@@ -23,9 +23,12 @@ import FeedbackStatus from "#nuxt-feedback/components/feedback-status.vue";
 import useFeedbackWidget from "#nuxt-feedback/composables/use-feedback-widget";
 import useFeedbackConfig from "#nuxt-feedback/composables/use-feedback-config";
 import { providePortalTarget } from "#nuxt-feedback/composables/use-portal-target";
+import { normalizeWidgetId } from "#nuxt-feedback/utils";
 import { useMediaQuery } from "@vueuse/core";
 
-const config = useFeedbackConfig();
+const props = defineProps<{ widgetId?: string }>();
+const widgetId = normalizeWidgetId(props.widgetId);
+const config = useFeedbackConfig(widgetId);
 const options = computed(() => ({
   title: "Feedback",
   description: "Tell us what you think.",
@@ -37,7 +40,7 @@ const options = computed(() => ({
 
 providePortalTarget();
 
-const { isOpen } = useFeedbackWidget();
+const { isOpen } = useFeedbackWidget(widgetId);
 const isDesktop = useMediaQuery("(min-width: 640px)");
 
 const isFeedbackSubmitted = ref(false);

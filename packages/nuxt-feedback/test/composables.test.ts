@@ -32,6 +32,16 @@ describe("useFeedbackWidget", () => {
     expect(b.isOpen.value).toBe(true);
   });
 
+  it("isolates state by widget id", () => {
+    const alpha = useFeedbackWidget("alpha");
+    const beta = useFeedbackWidget("beta");
+
+    alpha.openWidget();
+
+    expect(alpha.isOpen.value).toBe(true);
+    expect(beta.isOpen.value).toBe(false);
+  });
+
   it("does not open when widget is disabled in runtime config", () => {
     vi.mocked(useRuntimeConfig).mockReturnValue({
       public: { feedbackWidget: { widgetEnabled: false } },
@@ -50,5 +60,15 @@ describe("useFeedbackConfig", () => {
     expect(a.value).toEqual({});
     a.value = { title: "Hi" };
     expect(useFeedbackConfig().value).toEqual({ title: "Hi" });
+  });
+
+  it("isolates config by widget id", () => {
+    const alpha = useFeedbackConfig("alpha");
+    const beta = useFeedbackConfig("beta");
+
+    alpha.value = { title: "Alpha title" };
+
+    expect(alpha.value).toEqual({ title: "Alpha title" });
+    expect(beta.value).toEqual({});
   });
 });

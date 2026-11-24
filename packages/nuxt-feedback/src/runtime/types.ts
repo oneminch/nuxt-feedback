@@ -7,6 +7,7 @@ import type {
 import type { Reactions } from "#nuxt-feedback/utils";
 
 export interface FeedbackUIProps {
+  widgetId?: string;
   title?: string;
   description?: string;
   triggerLabel?: string;
@@ -18,7 +19,7 @@ export interface FeedbackUIProps {
 
 export type FeedbackModalProps = Omit<
   FeedbackUIProps,
-  "triggerLabel" | "triggerClass"
+  "widgetId" | "triggerLabel" | "triggerClass"
 >;
 
 export type FeedbackOption = Reactions[number];
@@ -53,6 +54,8 @@ export interface UseFeedbackWidget {
   closeWidget: () => void;
   openWidget: () => void;
 }
+
+export type WidgetId = string | undefined;
 
 export interface FeedbackWidgetRuntimeConfig {
   public?: {

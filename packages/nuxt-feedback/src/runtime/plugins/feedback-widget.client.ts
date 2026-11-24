@@ -2,7 +2,7 @@
 import { defineCustomElement } from "vue";
 import { defineNuxtPlugin } from "#imports";
 import FeedbackWidget from "#nuxt-feedback/components/feedback-widget.vue";
-import { FEEDBACK_WIDGET_TAG } from "#nuxt-feedback/utils";
+import { DEFAULT_WIDGET_ID, FEEDBACK_WIDGET_TAG } from "#nuxt-feedback/utils";
 import widgetCss from "../assets/css/tailwind.css?inline";
 import useFeedbackAvailability from "#nuxt-feedback/composables/use-feedback-availability";
 
@@ -71,12 +71,25 @@ export default defineNuxtPlugin((nuxtApp) => {
   registerCssProperties(widgetCss);
   customElements.define(FEEDBACK_WIDGET_TAG, FeedbackWidgetElement);
 
-  // A single modal serves every <FeedbackWidget /> trigger. It is attached to
-  // <body> so ancestor transforms/filters can't affect its fixed positioning.
+  const mountWidget = (widgetId: string) => {
+    const hasWidget = [...document.querySelectorAll(FEEDBACK_WIDGET_TAG)]
+      .some((widget) => widget.getAttribute("widget-id") === widgetId);
+
+    if (hasWidget) return;
+
+    const widget = new FeedbackWidgetElement();
+    widget.setAttribute("widget-id", widgetId);
+    document.body.appendChild(widget);
+  };
+
+  // Mount the default modal so `useFeedbackWidget()` works without adding a
+  // trigger component. Additional widget IDs are mounted by trigger components.
+  // The element is attached to <body> so ancestor transforms/filters can't
+  // affect its fixed positioning.
   // Mount after the app has mounted: a plugin runs inside Nuxt's app context,
   // where `inject()` would read the Nuxt app's provides instead of the
   // element's own, and the portal target provided by the modal would be lost.
   nuxtApp.hook("app:mounted", () => {
-    document.body.appendChild(new FeedbackWidgetElement());
+    mountWidget(DEFAULT_WIDGET_ID);
   });
 });

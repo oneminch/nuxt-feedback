@@ -6,6 +6,7 @@ import FeedbackStatus from "../src/runtime/components/feedback-status.vue";
 import FeedbackForm from "../src/runtime/components/feedback-form.vue";
 import useFeedbackWidget from "../src/runtime/composables/use-feedback-widget";
 import useFeedbackConfig from "../src/runtime/composables/use-feedback-config";
+import { FEEDBACK_WIDGET_TAG } from "../src/runtime/utils";
 import { resetState, useRuntimeConfig } from "./mocks/imports";
 
 const fetchMock = vi.fn();
@@ -14,6 +15,7 @@ vi.stubGlobal("$fetch", fetchMock);
 beforeEach(() => {
   resetState();
   vi.clearAllMocks();
+  document.body.innerHTML = "";
   vi.mocked(useRuntimeConfig).mockReturnValue({});
 });
 
@@ -48,7 +50,53 @@ describe("FeedbackTrigger", () => {
     const cfg = useFeedbackConfig().value;
     expect(cfg).toMatchObject({ title: "T", topics: ["a"], withTopics: true });
     expect(cfg).not.toHaveProperty("triggerLabel");
+    expect(cfg).not.toHaveProperty("widgetId");
     expect(cfg).not.toHaveProperty("description");
+  });
+
+  it("isolates modal props by widget id", async () => {
+    mount(FeedbackTrigger, {
+      props: { widgetId: "alpha", title: "Alpha", topics: ["a"] },
+    });
+    mount(FeedbackTrigger, {
+      props: { widgetId: "beta", title: "Beta", topics: ["b"] },
+    });
+    await flushPromises();
+
+    expect(useFeedbackConfig("alpha").value).toMatchObject({
+      title: "Alpha",
+      topics: ["a"],
+      withTopics: true,
+    });
+    expect(useFeedbackConfig("beta").value).toMatchObject({
+      title: "Beta",
+      topics: ["b"],
+      withTopics: true,
+    });
+  });
+
+  it("mounts one modal host per widget id", () => {
+    mount(FeedbackTrigger, { props: { widgetId: "alpha" } });
+    mount(FeedbackTrigger, { props: { widgetId: "alpha" } });
+    mount(FeedbackTrigger, { props: { widgetId: "beta" } });
+
+    const hosts = [...document.querySelectorAll(FEEDBACK_WIDGET_TAG)];
+    const ids = hosts.map((host) => host.getAttribute("widget-id"));
+
+    expect(hosts).toHaveLength(2);
+    expect(ids).toContain("alpha");
+    expect(ids).toContain("beta");
+  });
+
+  it("opens only the matching widget id", async () => {
+    const alpha = useFeedbackWidget("alpha");
+    const beta = useFeedbackWidget("beta");
+    const w = mount(FeedbackTrigger, { props: { widgetId: "alpha" } });
+
+    await w.get("button").trigger("click");
+
+    expect(alpha.isOpen.value).toBe(true);
+    expect(beta.isOpen.value).toBe(false);
   });
 
   it("disables the trigger when no server is available", async () => {

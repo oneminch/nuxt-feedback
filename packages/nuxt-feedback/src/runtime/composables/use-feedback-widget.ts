@@ -1,9 +1,10 @@
 import { useState } from "#imports";
 import type { UseFeedbackWidget } from "../types";
 import useFeedbackAvailability from "#nuxt-feedback/composables/use-feedback-availability";
+import { getFeedbackWidgetStateKey } from "#nuxt-feedback/utils";
 
-const useFeedbackWidget = (): UseFeedbackWidget => {
-  const isOpen = useState("feedback-widget-state", () => false);
+const useFeedbackWidget = (widgetId?: string): UseFeedbackWidget => {
+  const isOpen = useState(getFeedbackWidgetStateKey(widgetId), () => false);
   const { isWidgetEnabled } = useFeedbackAvailability();
 
   const closeWidget = () => {

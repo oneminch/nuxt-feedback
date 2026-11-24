@@ -184,6 +184,7 @@ The `<FeedbackWidget />` component accepts several props for customization:
 
 ```ts
 interface FeedbackUIProps {
+  widgetId?: string;
   title?: string;
   description?: string;
   triggerLabel?: string;
@@ -196,6 +197,7 @@ interface FeedbackUIProps {
 
 | Prop           | Type       | Default                                                 | Description                                   |
 | -------------- | ---------- | ------------------------------------------------------- | --------------------------------------------- |
+| `widgetId`     | `string`   | `"default"`                                             | Groups trigger + modal state/config so multiple widgets can coexist independently |
 | `title`        | `string`   | `"Feedback"`                                            | Title displayed in the feedback modal         |
 | `description`  | `string`   | `"Tell us what you think."`                             | Description text in the modal                 |
 | `triggerLabel` | `string`   | `"Feedback"`                                            | Text for the trigger button                   |
@@ -248,6 +250,7 @@ Control the widget programmatically using the `useFeedbackWidget` composable:
 ```vue
 <script setup lang="ts">
 const { isOpen, openWidget, closeWidget } = useFeedbackWidget();
+const billingWidget = useFeedbackWidget("billing");
 
 // Open widget programmatically
 function handleButtonClick() {
@@ -278,6 +281,8 @@ interface UseFeedbackWidget {
   openWidget: () => void; // Open the widget
   closeWidget: () => void; // Close the widget
 }
+
+declare function useFeedbackWidget(widgetId?: string): UseFeedbackWidget;
 ```
 
 ## Submission Methods

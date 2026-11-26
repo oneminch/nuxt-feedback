@@ -21,6 +21,9 @@ A simple & customizable feedback widget for your Nuxt apps.
 
 </div>
 
+> [!WARNING]  
+> Nuxt Feedback is under active development; expect the API to change between releases.
+
 ## Table of Contents
 
 - [Features](#features)

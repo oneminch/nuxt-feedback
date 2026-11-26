@@ -1,4 +1,4 @@
-![Cover Image](../../app/docs/public/cover.png)
+![Cover Image](../../apps/docs/public/cover.png)
 
 <div align="center">
 

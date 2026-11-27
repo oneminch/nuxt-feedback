@@ -1,4 +1,4 @@
-::div{class="w-full mb-4! flex gap-2 items-center justify-between"}
+::site-header
 :logo
 
 :theme-toggle

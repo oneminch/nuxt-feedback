@@ -1,13 +1,21 @@
-:content-logo
+::div{class="w-full mb-4! flex gap-2 items-center justify-between"}
+:logo
+
+:theme-toggle
+::
 
 <!-- ![Cover Image](/cover.png) -->
 
 A simple & customizable feedback widget for your Nuxt apps.
 
-> [!WARNING]  
-> Nuxt Feedback is under active development; expect the API to change between releases.
+::warning  
+Nuxt Feedback is under active development; expect the API to change between releases.
+<br /><br />
+Refer to the [Known Issues](#known-issues) section if you encounter any issues.
+::
 
-## Table of Contents (Auto)
+::toc{:links="toc"}
+::
 
 <!-- - [Features](#features)
 - [Quick Setup](#quick-setup)
@@ -45,7 +53,6 @@ A simple & customizable feedback widget for your Nuxt apps.
   - Custom Handler
 - 🌟 Handy composable for controlling widget
 
-I recommend reading the [Known Issues](#known-issues) section before setting up the module.
 
 ## Quick Setup
 
@@ -94,7 +101,7 @@ export default defineNuxtConfig({
 
 | Option           | Type                                       | Required | Default           | Description                                                        |
 | ---------------- | ------------------------------------------ | -------- | ----------------- | ------------------------------------------------------------------ |
-| `method`         | `'email' \| 'github' \| 'custom-endpoint'` | ✅       | -                 | Feedback submission method                                         |
+| `method`         | `'email'` \| `'github'` \| `'custom-endpoint'` | ✅       | -                 | Feedback submission method                                         |
 | `siteName`       | `string`                                   | ❌       | `"My Nuxt App"` | Site name used in feedback submissions                             |
 | `customEndpoint` | `string`                                   | ❌       | -                 | Custom endpoint path (required when method is `'custom-endpoint'`) |
 

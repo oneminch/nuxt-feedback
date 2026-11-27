@@ -11,6 +11,7 @@ allowBuilds:
 catalogs:
   apps:
     '@nuxt/content': ^3.16.1
+    '@nuxtjs/color-mode': ^4.1.0
     '@tailwindcss/typography': ^0.5.20
     better-sqlite3: ^13.2.0
     vue: ^3.5.43

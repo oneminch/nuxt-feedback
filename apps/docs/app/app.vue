@@ -1,12 +1,18 @@
 <template>
   <NuxtRouteAnnouncer />
+
   <NuxtPage />
 </template>
 
 <style>
+@reference './assets/css/main.css';
+
+html,
+body {
+  @apply bg-neutral-50 dark:bg-neutral-900;
+}
+
 #__nuxt {
-  max-width: 64rem;
-  padding: 2.5rem;
-  margin: 0 auto;
+  @apply max-w-4xl p-10 mx-auto;
 }
 </style>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nuxt/content": "catalog:apps",
+    "@nuxtjs/color-mode": "catalog:apps",
     "better-sqlite3": "catalog:apps",
     "nuxt": "catalog:shared",
     "vue": "catalog:apps",

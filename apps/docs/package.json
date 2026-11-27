@@ -3,18 +3,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nuxt dev",
     "build": "nuxt build",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "prepare": "pnpm --filter @minch/nuxt-feedback run build:stub && pnpm --filter @minch/nuxt-feedback run build:prepare && nuxt prepare",
-    "postinstall": "pnpm run prepare"
+    "preview": "nuxt preview"
   },
   "dependencies": {
-    "@minch/nuxt-feedback": "workspace:*",
-    "@vueuse/core": "catalog:shared",
-    "nuxt": "catalog:shared"
+    "@nuxt/content": "catalog:apps",
+    "better-sqlite3": "catalog:apps",
+    "nuxt": "catalog:shared",
+    "vue": "catalog:apps",
+    "vue-router": "catalog:apps"
   },
   "devDependencies": {
-    "@nuxt/eslint": "catalog:shared"
+    "@tailwindcss/typography": "catalog:apps"
   }
 }

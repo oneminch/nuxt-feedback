@@ -4,14 +4,15 @@
   "scripts": {
     "docs": "pnpm --filter nuxt-feedback-docs dev",
     "docs:build": "pnpm --filter nuxt-feedback-docs build",
-    "docs:generate": "pnpm --filter nuxt-feedback-docs generate",
     "docs:prepare": "pnpm --filter nuxt-feedback-docs prepare",
-    "dev": "pnpm run docs",
+    "dev": "pnpm --filter nuxt-feedback-playground dev",
+    "dev:build": "pnpm --filter nuxt-feedback-playground build",
+    "dev:prepare": "pnpm --filter nuxt-feedback-playground prepare",
     "build": "pnpm --filter @minch/nuxt-feedback prepack",
     "lint": "eslint --cache .",
     "release": "pnpm --filter @minch/nuxt-feedback release",
     "test": "pnpm --filter @minch/nuxt-feedback test",
-    "test:types": "pnpm --filter @minch/nuxt-feedback exec vue-tsc --noEmit && pnpm --filter nuxt-feedback-docs exec vue-tsc --noEmit"
+    "test:types": "pnpm --filter @minch/nuxt-feedback exec vue-tsc --noEmit"
   },
   "packageManager": "pnpm@12.21.0",
   "devDependencies": {

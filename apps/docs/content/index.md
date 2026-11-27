@@ -4,8 +4,6 @@
 :theme-toggle
 ::
 
-<!-- ![Cover Image](/cover.png) -->
-
 A simple & customizable feedback widget for your Nuxt apps.
 
 ::warning  
@@ -16,30 +14,6 @@ Refer to the [Known Issues](#known-issues) section if you encounter any issues.
 
 ::toc{:links="toc"}
 ::
-
-<!-- - [Features](#features)
-- [Quick Setup](#quick-setup)
-- [Configuration](#configuration)
-  - [Module Options](#module-options)
-  - [Environment Variables](#environment-variables)
-- [Usage](#usage)
-  - [Basic Usage](#basic-usage)
-  - [Customizing the Widget](#customizing-the-widget)
-  - [Using the Composable](#using-the-composable)
-- [Submission Methods](#submission-methods)
-  - [Email (Resend)](#email-resend)
-  - [GitHub Issues](#github-issues)
-  - [Custom Endpoint](#custom-endpoint)
-- [Examples](#examples)
-  - [Different Styling Approaches](#different-styling-approaches)
-  - [Topic-specific Feedback](#topic-specific-feedback)
-  - [Programmatic Control](#programmatic-control)
-- [Known Issues](#known-issues)
-- [Troubleshooting](#troubleshooting)
-  - [Common Issues](#common-issues)
-  - [Error Handling](#error-handling)
-- [Contribution](#contribution)
-- [License](#license) -->
 
 ## Features
 

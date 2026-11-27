@@ -197,7 +197,7 @@ interface FeedbackUIProps {
 
 | Prop           | Type       | Default                                                 | Description                                   |
 | -------------- | ---------- | ------------------------------------------------------- | --------------------------------------------- |
-| `widgetId`     | `string`   | `"default"`                                             | Groups trigger + modal state/config so multiple widgets can coexist independently |
+| `widgetId`     | `string`   | Auto-generated                                          | Optional advanced override to share/target a specific widget instance across components |
 | `title`        | `string`   | `"Feedback"`                                            | Title displayed in the feedback modal         |
 | `description`  | `string`   | `"Tell us what you think."`                             | Description text in the modal                 |
 | `triggerLabel` | `string`   | `"Feedback"`                                            | Text for the trigger button                   |
@@ -284,6 +284,9 @@ interface UseFeedbackWidget {
 
 declare function useFeedbackWidget(widgetId?: string): UseFeedbackWidget;
 ```
+
+`useFeedbackWidget()` without an argument controls the default global instance.
+`<FeedbackWidget />` trigger components are isolated by default via internal auto-generated instance IDs. Pass `widget-id` only for advanced shared-target scenarios.
 
 ## Submission Methods
 

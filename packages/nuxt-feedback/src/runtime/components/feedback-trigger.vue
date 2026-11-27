@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch, watchEffect } from "#imports";
+import { getCurrentInstance } from "vue";
 import type { FeedbackUIProps } from "../types";
 import useFeedbackWidget from "#nuxt-feedback/composables/use-feedback-widget";
 import useFeedbackConfig from "#nuxt-feedback/composables/use-feedback-config";
@@ -7,7 +8,6 @@ import useFeedbackAvailability from "#nuxt-feedback/composables/use-feedback-ava
 import { FEEDBACK_WIDGET_TAG, normalizeWidgetId } from "#nuxt-feedback/utils";
 
 const props = withDefaults(defineProps<FeedbackUIProps>(), {
-  widgetId: "default",
   triggerLabel: "Share Feedback",
   triggerClass: "",
   // Boolean props default to false when absent; keep the modal default.
@@ -17,7 +17,9 @@ const props = withDefaults(defineProps<FeedbackUIProps>(), {
 const { isWidgetEnabled } = useFeedbackAvailability();
 const trigger = ref<HTMLButtonElement>();
 let openedByThis = false;
-const widgetId = computed(() => normalizeWidgetId(props.widgetId));
+const instance = getCurrentInstance();
+const autoWidgetId = `instance-${instance?.uid ?? "fallback"}`;
+const widgetId = computed(() => normalizeWidgetId(props.widgetId || autoWidgetId));
 
 const getWidget = () => useFeedbackWidget(widgetId.value);
 const isOpen = computed({

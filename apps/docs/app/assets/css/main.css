@@ -1,9 +1,4 @@
-/* :root {
-  --nfw-radio-checked-border: #f43f5e;
-  --nfw-radio-checked-background: #fecdd3;
-}
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-.dark {
-  --nfw-radio-checked-border: #f43f5e;
-  --nfw-radio-checked-background: #9f1239;
-} */
+@custom-variant dark (&:where(.dark, .dark *));

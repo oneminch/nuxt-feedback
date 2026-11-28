@@ -73,8 +73,8 @@ describe("FeedbackTrigger", () => {
   });
 
   it("mounts one modal host per trigger instance by default", () => {
-    mount(FeedbackTrigger);
-    mount(FeedbackTrigger);
+    const a = mount(FeedbackTrigger);
+    const b = mount(FeedbackTrigger);
 
     const hosts = [...document.querySelectorAll(FEEDBACK_WIDGET_TAG)];
     const ids = hosts.map((host) => host.getAttribute("widget-id") || "");
@@ -82,17 +82,29 @@ describe("FeedbackTrigger", () => {
     expect(hosts).toHaveLength(2);
     expect(new Set(ids).size).toBe(2);
     expect(ids.every((id) => id.startsWith("instance-"))).toBe(true);
+
+    a.unmount();
+    expect(document.querySelectorAll(FEEDBACK_WIDGET_TAG)).toHaveLength(1);
+
+    b.unmount();
+    expect(document.querySelectorAll(FEEDBACK_WIDGET_TAG)).toHaveLength(0);
   });
 
   it("mounts one modal host for duplicate explicit widget ids", () => {
-    mount(FeedbackTrigger, { props: { widgetId: "shared" } });
-    mount(FeedbackTrigger, { props: { widgetId: "shared" } });
+    const a = mount(FeedbackTrigger, { props: { widgetId: "shared" } });
+    const b = mount(FeedbackTrigger, { props: { widgetId: "shared" } });
 
     const hosts = [...document.querySelectorAll(FEEDBACK_WIDGET_TAG)];
     const ids = hosts.map((host) => host.getAttribute("widget-id"));
 
     expect(hosts).toHaveLength(1);
     expect(ids).toEqual(["shared"]);
+
+    a.unmount();
+    expect(document.querySelectorAll(FEEDBACK_WIDGET_TAG)).toHaveLength(1);
+
+    b.unmount();
+    expect(document.querySelectorAll(FEEDBACK_WIDGET_TAG)).toHaveLength(0);
   });
 
   it("opens only the clicked trigger by default", async () => {

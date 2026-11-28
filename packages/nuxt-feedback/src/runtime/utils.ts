@@ -3,6 +3,7 @@ import type { RouteLocationNormalizedLoadedGeneric } from "#vue-router";
 import DOMPurify from "isomorphic-dompurify";
 
 export const FEEDBACK_WIDGET_TAG = "nuxt-feedback-widget";
+export const DEFAULT_WIDGET_ID = "default";
 
 export const SUBMISSION_METHODS = ["email", "github", "custom-endpoint"] as const;
 
@@ -21,6 +22,15 @@ export const logger = {
   warn: (...args: unknown[]) => console.warn("[Feedback Widget]", ...args),
   log: (...args: unknown[]) => console.log("[Feedback Widget]", ...args),
 };
+
+export const normalizeWidgetId = (widgetId?: string) =>
+  widgetId?.trim() || DEFAULT_WIDGET_ID;
+
+export const getFeedbackWidgetStateKey = (widgetId?: string) =>
+  `feedback-widget-state:${normalizeWidgetId(widgetId)}`;
+
+export const getFeedbackWidgetConfigKey = (widgetId?: string) =>
+  `feedback-widget-config:${normalizeWidgetId(widgetId)}`;
 
 export const createFormData = (
   route: RouteLocationNormalizedLoadedGeneric,

@@ -1,9 +1,20 @@
 <script setup lang="ts">
-import { nextTick, ref, watch, watchEffect } from "#imports";
+import {
+  computed,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  ref,
+  useState,
+  watch,
+  watchEffect,
+} from "#imports";
+import { getCurrentInstance } from "vue";
 import type { FeedbackUIProps } from "../types";
 import useFeedbackWidget from "#nuxt-feedback/composables/use-feedback-widget";
 import useFeedbackConfig from "#nuxt-feedback/composables/use-feedback-config";
 import useFeedbackAvailability from "#nuxt-feedback/composables/use-feedback-availability";
+import { FEEDBACK_WIDGET_TAG, normalizeWidgetId } from "#nuxt-feedback/utils";
 
 const props = withDefaults(defineProps<FeedbackUIProps>(), {
   triggerLabel: "Share Feedback",
@@ -12,25 +23,74 @@ const props = withDefaults(defineProps<FeedbackUIProps>(), {
   withTopics: true,
 });
 
-const { isOpen, openWidget } = useFeedbackWidget();
 const { isWidgetEnabled } = useFeedbackAvailability();
-const config = useFeedbackConfig();
 const trigger = ref<HTMLButtonElement>();
 let openedByThis = false;
+const instance = getCurrentInstance();
+const autoWidgetId = `instance-${instance?.uid ?? "fallback"}`;
+const widgetId = computed(() => normalizeWidgetId(props.widgetId || autoWidgetId));
+const triggerWidgetMountCounts = useState<Record<string, number>>(
+  "feedback-widget-trigger-mount-counts",
+  () => ({})
+);
+
+const getWidget = () => useFeedbackWidget(widgetId.value);
+const isOpen = computed({
+  get: () => getWidget().isOpen.value,
+  set: (value: boolean) => {
+    getWidget().isOpen.value = value;
+  },
+});
 
 // The modal lives in a separate Vue app; share its content via Nuxt state.
-// The most recently updated widget wins.
+// Each widget ID keeps an isolated config object.
 watchEffect(() => {
-  const { triggerLabel, triggerClass, ...modalProps } = props;
-  config.value = Object.fromEntries(
+  const { widgetId: _widgetId, triggerLabel, triggerClass, ...modalProps } = props;
+  useFeedbackConfig(widgetId.value).value = Object.fromEntries(
     Object.entries(modalProps).filter(([, value]) => value !== undefined),
   );
+});
+
+onMounted(() => {
+  const id = widgetId.value;
+  triggerWidgetMountCounts.value[id] =
+    (triggerWidgetMountCounts.value[id] ?? 0) + 1;
+
+  const hasWidget = [...document.querySelectorAll(FEEDBACK_WIDGET_TAG)]
+    .some((widget) => widget.getAttribute("widget-id") === id);
+
+  if (hasWidget) return;
+
+  const widget = document.createElement(FEEDBACK_WIDGET_TAG);
+  widget.setAttribute("widget-id", id);
+  widget.setAttribute("data-trigger-managed", "true");
+  document.body.appendChild(widget);
+});
+
+onUnmounted(() => {
+  const id = widgetId.value;
+  const count = triggerWidgetMountCounts.value[id] ?? 0;
+  const nextCount = Math.max(0, count - 1);
+
+  if (nextCount === 0) {
+    triggerWidgetMountCounts.value[id] = 0;
+
+    const widget = [...document.querySelectorAll(FEEDBACK_WIDGET_TAG)].find(
+      (el) =>
+        el.getAttribute("widget-id") === id &&
+        el.getAttribute("data-trigger-managed") === "true"
+    );
+    widget?.remove();
+    return;
+  }
+
+  triggerWidgetMountCounts.value[id] = nextCount;
 });
 
 const open = () => {
   if (!isWidgetEnabled.value) return;
   openedByThis = true;
-  openWidget();
+  getWidget().openWidget();
 };
 
 // Reka restores focus to its own trigger; there is none here, so do it manually.

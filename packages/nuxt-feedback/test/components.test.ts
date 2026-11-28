@@ -4,8 +4,8 @@ import { flushPromises, mount } from "@vue/test-utils";
 import FeedbackTrigger from "../src/runtime/components/feedback-trigger.vue";
 import FeedbackStatus from "../src/runtime/components/feedback-status.vue";
 import FeedbackForm from "../src/runtime/components/feedback-form.vue";
-import useFeedbackWidget from "../src/runtime/composables/use-feedback-widget";
 import useFeedbackConfig from "../src/runtime/composables/use-feedback-config";
+import { FEEDBACK_WIDGET_TAG } from "../src/runtime/utils";
 import { resetState, useRuntimeConfig } from "./mocks/imports";
 
 const fetchMock = vi.fn();
@@ -14,6 +14,7 @@ vi.stubGlobal("$fetch", fetchMock);
 beforeEach(() => {
   resetState();
   vi.clearAllMocks();
+  document.body.innerHTML = "";
   vi.mocked(useRuntimeConfig).mockReturnValue({});
 });
 
@@ -33,33 +34,97 @@ describe("FeedbackTrigger", () => {
   });
 
   it("opens the widget on click", async () => {
-    const widget = useFeedbackWidget();
     const w = mount(FeedbackTrigger);
     await w.get("button").trigger("click");
-    expect(widget.isOpen.value).toBe(true);
     expect(w.get("button").attributes("aria-expanded")).toBe("true");
   });
 
   it("shares modal props (but not trigger props) via config state", async () => {
     mount(FeedbackTrigger, {
-      props: { title: "T", triggerLabel: "x", topics: ["a"] },
+      props: { widgetId: "shared", title: "T", triggerLabel: "x", topics: ["a"] },
     });
     await flushPromises();
-    const cfg = useFeedbackConfig().value;
+    const cfg = useFeedbackConfig("shared").value;
     expect(cfg).toMatchObject({ title: "T", topics: ["a"], withTopics: true });
     expect(cfg).not.toHaveProperty("triggerLabel");
+    expect(cfg).not.toHaveProperty("widgetId");
     expect(cfg).not.toHaveProperty("description");
+  });
+
+  it("isolates modal props by widget id", async () => {
+    mount(FeedbackTrigger, {
+      props: { widgetId: "alpha", title: "Alpha", topics: ["a"] },
+    });
+    mount(FeedbackTrigger, {
+      props: { widgetId: "beta", title: "Beta", topics: ["b"] },
+    });
+    await flushPromises();
+
+    expect(useFeedbackConfig("alpha").value).toMatchObject({
+      title: "Alpha",
+      topics: ["a"],
+      withTopics: true,
+    });
+    expect(useFeedbackConfig("beta").value).toMatchObject({
+      title: "Beta",
+      topics: ["b"],
+      withTopics: true,
+    });
+  });
+
+  it("mounts one modal host per trigger instance by default", () => {
+    const a = mount(FeedbackTrigger);
+    const b = mount(FeedbackTrigger);
+
+    const hosts = [...document.querySelectorAll(FEEDBACK_WIDGET_TAG)];
+    const ids = hosts.map((host) => host.getAttribute("widget-id") || "");
+
+    expect(hosts).toHaveLength(2);
+    expect(new Set(ids).size).toBe(2);
+    expect(ids.every((id) => id.startsWith("instance-"))).toBe(true);
+
+    a.unmount();
+    expect(document.querySelectorAll(FEEDBACK_WIDGET_TAG)).toHaveLength(1);
+
+    b.unmount();
+    expect(document.querySelectorAll(FEEDBACK_WIDGET_TAG)).toHaveLength(0);
+  });
+
+  it("mounts one modal host for duplicate explicit widget ids", () => {
+    const a = mount(FeedbackTrigger, { props: { widgetId: "shared" } });
+    const b = mount(FeedbackTrigger, { props: { widgetId: "shared" } });
+
+    const hosts = [...document.querySelectorAll(FEEDBACK_WIDGET_TAG)];
+    const ids = hosts.map((host) => host.getAttribute("widget-id"));
+
+    expect(hosts).toHaveLength(1);
+    expect(ids).toEqual(["shared"]);
+
+    a.unmount();
+    expect(document.querySelectorAll(FEEDBACK_WIDGET_TAG)).toHaveLength(1);
+
+    b.unmount();
+    expect(document.querySelectorAll(FEEDBACK_WIDGET_TAG)).toHaveLength(0);
+  });
+
+  it("opens only the clicked trigger by default", async () => {
+    const a = mount(FeedbackTrigger);
+    const b = mount(FeedbackTrigger);
+
+    await a.get("button").trigger("click");
+
+    expect(a.get("button").attributes("aria-expanded")).toBe("true");
+    expect(b.get("button").attributes("aria-expanded")).toBe("false");
   });
 
   it("disables the trigger when no server is available", async () => {
     vi.mocked(useRuntimeConfig).mockReturnValue({
       public: { feedbackWidget: { widgetEnabled: false } },
     });
-    const widget = useFeedbackWidget();
     const w = mount(FeedbackTrigger);
     expect(w.get("button").attributes("disabled")).toBeDefined();
     await w.get("button").trigger("click");
-    expect(widget.isOpen.value).toBe(false);
+    expect(w.get("button").attributes("aria-expanded")).toBe("false");
   });
 });
 

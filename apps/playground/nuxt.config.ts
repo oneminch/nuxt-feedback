@@ -7,7 +7,7 @@ export default defineNuxtConfig({
 
   modules: ["@minch/nuxt-feedback", "@nuxt/eslint"],
 
-  // css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.css"],
 
   feedbackWidget: {
     method: "custom-endpoint",

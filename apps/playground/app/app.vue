@@ -25,10 +25,14 @@ useSeoMeta({
   <div class="container">
     <header>
       <h1>
-        <nuxt-link to="/">Nuxt Feedback</nuxt-link>
+        <nuxt-link to="/">
+          <img src="/logo.svg" alt="Widget Logo" class="" />
+          <span>Nuxt Feedback</span>
+        </nuxt-link>
       </h1>
 
       <nav>
+        <nuxt-link class="btn demo-link" to="/demo">More Demos</nuxt-link>
         <button
           :class="['btn btn--icon', { 'btn--dark': themeIcon === '🔆' }]"
           @click="toggleColorMode"
@@ -45,21 +49,6 @@ useSeoMeta({
 </template>
 
 <style>
-* {
-  font-family: sans-serif;
-}
-
-:root {
-  --color-logo-green: #38c26b;
-}
-
-#__nuxt {
-  position: absolute;
-  inset: 0;
-  padding: 1rem 2rem;
-  background-color: oklch(98.4% 0.003 247.86);
-}
-
 .container {
   max-width: 1024px;
   margin: 0 auto;
@@ -75,66 +64,39 @@ header {
   padding: 0 0.5rem;
 }
 
-a {
-  color: #262626;
-  text-decoration: none;
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 h1 {
   font-size: 1.5rem;
   color: var(--color-logo-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn {
+a {
+  color: #262626;
+  text-decoration: none;
+}
+
+h1 a {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  height: 2.25rem;
-  padding: 0.25rem 1.25rem;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  color: #262626;
-  border: 1px solid oklch(92.5% 0.005 214.3);
-  box-shadow: none;
-  font-size: 0.95rem;
-  cursor: pointer;
-  &:hover {
-    @media (hover: hover) {
-      background-color: oklch(96.3% 0.002 197.1);
-    }
-  }
 }
 
-.btn > span {
-  line-height: 1rem;
+h1 img {
+  width: 3rem;
+  height: 3rem;
 }
 
-.btn--icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50rem;
-  font-size: 1rem;
-}
-
-.btn--fixed {
-  position: fixed;
-  right: 2.5rem;
-  bottom: 2.5rem;
-}
-
-.btn--dark {
-  background-color: #262626;
-  color: #fff;
-  border: 1px solid #3f3f3f;
-  box-shadow: none;
-  &:hover {
-    @media (hover: hover) {
-      background-color: #3f3f3f;
-    }
-  }
+.demo-link {
+  height: 2rem;
+  border-radius: 5rem;
 }
 </style>
